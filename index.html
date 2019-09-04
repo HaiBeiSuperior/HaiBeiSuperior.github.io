@@ -69,13 +69,52 @@
 <!-- 通过连接CDN加载MathJax的js代码 -->
 <script type="text/javascript" async src="https://cdnjs.cloudflare.com/ajax/libs/mathjax/2.7.5/MathJax.js?config=TeX-MML-AM_CHTML">
 </script>
+<style type="text/css">
+        #bg{
+            display: none;
+            position: absolute;
+            top: 0%;
+            left: 0%;
+            width: 100%;
+            height: 100%;
+            background-color: black;
+            z-index:1001;
+            /*-moz-opacity: 0.7;  */
+            /*opacity:.70;  *
+            /*filter: alpha(opacity=70);*/
+        }
+        #show{
+            display: none;
+            position: absolute;
+            top: 25%;
+            left: 22%;
+            width: 53%;
+            height: 49%;
+            padding: 8px;
+            border: 8px solid #E8E9F7;
+            background-color: white;
+            z-index:1002;
+            overflow: auto;
+        }
+        /*遮罩图片居中显示*/
+        .under-img{
+            position: absolute;
+            top:50%;
+            left: 50%;
+            transform: translate(-50%,-50%);
+        }
 
+        .links a{
+            cursor: pointer;
+        }
+    </style>
 
 
 
 
 </head>
 <body>
+
     <div class="wrapper">
         <header>
     <nav class="navbar">
@@ -122,19 +161,6 @@
     </nav>
 
 </header>
-<script>
-    var mobileBtn = function f() {
-        var toggleMenu = document.getElementsByClassName("menu-toggle")[0];
-        var mobileMenu = document.getElementById("mobile-menu");
-        if(toggleMenu.classList.contains("active")){
-           toggleMenu.classList.remove("active")
-            mobileMenu.classList.remove("active")
-        }else{
-            toggleMenu.classList.add("active")
-            mobileMenu.classList.add("active")
-        }
-    }
-</script>
         <div class="main">
 
     <div class="container">
@@ -146,23 +172,18 @@
         <div class="description"><p>人生一征途耳，其长百年， <strong>我已走过十之七八回首前尘</strong> <br>历历在目，崎岖多于平坦， <em>忽深谷，忽洪涛，幸赖桥梁以渡.</em> 桥何名欤？曰奋斗.</p>
 </div>
         <div class="links">
+            <!-- 遮罩图片层 -->
+            <div id="bg" onclick="hidediv()">
+                <img class="under-img" src="a.jpg" id="showImg">
+            </div>
+            <a class="link-item" title="微信" onclick="showdiv(1)">
 
+                <i class="iconfont icon-wechat"></i>
+            </a>
+            <a class="link-item" title="我的简历"onclick="showdiv(2)">
 
-                    <a class="link-item" title="微信">
-
-
-                            <i class="iconfont icon-wechat"></i>
-
-                    </a>
-
-
-
-                    <a class="link-item" title="我的简历" href="/">
-
-
-                            <i class="iconfont icon-blog"></i>
-
-                    </a>
+                <i class="iconfont icon-blog"></i>
+            </a>
                 <!---->
                     <!--<a class="link-item" title="Instagram" href>-->
                         <!---->
@@ -184,9 +205,8 @@
                             <!--<i class="iconfont icon-github"></i>-->
                         <!---->
                     <!--</a>-->
-
-
         </div>
+
     </div>
 </div>
 
@@ -199,6 +219,36 @@
 </footer>
 
     </div>
+
+<script>
+    var mobileBtn = function f() {
+        var toggleMenu = document.getElementsByClassName("menu-toggle")[0];
+        var mobileMenu = document.getElementById("mobile-menu");
+        if(toggleMenu.classList.contains("active")){
+           toggleMenu.classList.remove("active")
+            mobileMenu.classList.remove("active")
+        }else{
+            toggleMenu.classList.add("active")
+            mobileMenu.classList.add("active")
+        }
+    }
+    //遮罩层显示方法
+    function showdiv(i) {
+        var img = document.getElementById("showImg")
+        if (i == 1) {
+            //微信图片地址
+            img.src = "/image/微信图片_20190903204323.jpg";
+        } else {
+            //个人简历图片地址
+            img.src = "/image/090414103780_0222222_1.png"
+        }
+        document.getElementById("bg").style.display ="block";
+    }
+    //遮罩层隐藏方法
+    function hidediv() {
+        document.getElementById("bg").style.display ='none';
+    }
+</script>
 
 </body>
 </html>
