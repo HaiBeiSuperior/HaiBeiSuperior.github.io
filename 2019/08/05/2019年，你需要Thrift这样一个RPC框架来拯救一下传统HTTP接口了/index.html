@@ -1,0 +1,228 @@
+<!DOCTYPE html>
+<html lang="en">
+<head><meta name="generator" content="Hexo 3.9.0">
+    <meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, user-scalable=no, initial-scale=1.0, maximum-scale=1.0, minimum-scale=1.0">
+<meta http-equiv="X-UA-Compatible" content="ie=edge">
+
+
+
+<title>2019年，你需要Thrift这样一个RPC框架来拯救一下传统HTTP接口了 | 海北的个人博客</title>
+
+
+
+    <link rel="icon" href="/favicon.ico">
+
+
+
+
+    <!-- stylesheets list from _config.yml -->
+    
+    <link rel="stylesheet" href="/css/style.css">
+    
+
+
+
+    <!-- scripts list from _config.yml -->
+    
+    <script src="/js/script.js"></script>
+    
+    <script src="/js/tocbot.min.js"></script>
+    
+
+
+
+    
+    
+        
+    
+
+
+</head>
+<body>
+    <div class="wrapper">
+        <header>
+    <nav class="navbar">
+        <div class="container">
+            <div class="navbar-header header-logo"><a href="/">ღHaibei&#39;s Blog</a></div>
+            <div class="menu navbar-right">
+                
+                    <a class="menu-item" href="/archives">Blog</a>
+                
+                    <a class="menu-item" href="/category">Categories</a>
+                
+                    <a class="menu-item" href="/tag">Tags</a>
+                
+                    <a class="menu-item" href="/about">About</a>
+                
+                    <a class="menu-item" href="/resume">Resume</a>
+                
+                <input id="switch_default" type="checkbox" class="switch_default">
+                <label for="switch_default" class="toggleBtn"></label>
+            </div>
+
+        </div>
+    </nav>
+
+    
+    <nav class="navbar-mobile" id="nav-mobile">
+        <div class="container">
+            <div class="navbar-header">
+                <div>
+                    <a href="/">ღHaibei&#39;s Blog</a><a id="mobile-toggle-theme">·&nbsp;Light</a>
+                </div>
+                <div class="menu-toggle" onclick="mobileBtn()">&#9776; Menu</div>
+            </div>
+            <div class="menu" id="mobile-menu">
+                
+                    <a class="menu-item" href="/archives">Blog</a>
+                
+                    <a class="menu-item" href="/category">Categories</a>
+                
+                    <a class="menu-item" href="/tag">Tags</a>
+                
+                    <a class="menu-item" href="/about">About</a>
+                
+                    <a class="menu-item" href="/resume">Resume</a>
+                
+            </div>
+        </div>
+    </nav>
+
+</header>
+<script>
+    var mobileBtn = function f() {
+        var toggleMenu = document.getElementsByClassName("menu-toggle")[0];
+        var mobileMenu = document.getElementById("mobile-menu");
+        if(toggleMenu.classList.contains("active")){
+           toggleMenu.classList.remove("active")
+            mobileMenu.classList.remove("active")
+        }else{
+            toggleMenu.classList.add("active")
+            mobileMenu.classList.add("active")
+        }
+    }
+</script>
+        <div class="main">
+            <div class="container">
+    
+    
+
+    
+    <article class="post-wrap">
+        <header class="post-header">
+            <h1 class="post-title">2019年，你需要Thrift这样一个RPC框架来拯救一下传统HTTP接口了</h1>
+            
+                <div class="post-meta">
+                    
+                        Author: <a itemprop="author" rel="author" href="/">Haibei</a>
+                    
+
+                    
+                        <span class="post-time">
+                        Date: <a href="#">August 5, 2019&nbsp;&nbsp;1:51:49</a>
+                        </span>
+                    
+                    
+                </div>
+            
+        </header>
+
+        <div class="post-content">
+            <p>​    目前市面上类似Django的drf框架基于json的http接口解决方案大行其道，人们也热衷于在接口不多、系统与系统交互较少的情况下使用它，http接口的优点就是简单、直接、开发方便，门槛低，利用现成的http协议进行传输。</p>
+<p>​    但是事情往往有两面，如果是一个大型的网站，内部子系统较多、接口非常多的情况下，RPC框架的好处就显示出来了，首先就是长链接，不必每次通信都要像http 一样去3次握手4次挥手，减少了网络开销；其次就是RPC框架一般都有注册中心，有丰富的监控管理；发布、下线接口、动态扩展等，对调用方来说是无感知、统一化的操作。第三个来说就是安全性。最后就是最近流行的服务化架构、服务化治理，RPC框架是一个强力的支撑。</p>
+<p>​    论复杂度，RPC框架肯定是高于简单的HTTP接口的。但毋庸置疑，HTTP接口由于受限于HTTP协议，需要带HTTP请求头，导致传输起来效率或者说安全性不如RPC，目前市面上流行的rpc框架有dubbo/hessian Thrift，阿里开源的dubbo固然还不错，但是本人更倾向于facebook开源的Thrift框架，这款框架在github上好评如潮，这一次我们使用的就是基于Thrift的thriftpy2框架。</p>
+<p>​    Thrift是一种接口描述语言和二进制通讯协议，它被用来定义和创建跨语言的服务，这是维基百科的描述。简单来说就是你可以按照Thrift定义语法编写.thrift,然后用Thrift命令行生成各种语言的代码，比如OC、Java、C++、JS，调用这些代码就可以完成客户端与服务器的通信了，不需要自己去写网络请求、数据解析等接口。</p>
+<p>​    其实在本人的实际教学工作中主要考虑到这两个优点：</p>
+<p>​    RPC。通过简单定义Thrift描述语言文件，使用Thrift -gen命令可以生成多种语言的代码，这些代码包含了网络通信,数据编解码的功能。这就免去了前后台编写这部分繁琐的代码，同时也统一了前后台的实现逻辑。</p>
+<p>​    Thrift的二进制数据的编码比json更加紧凑、减少了无用的数据的传输。</p>
+<p>​    </p>
+<p>​    安装:</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">pip3 install thriftpy2</span><br></pre></td></tr></table></figure>
+
+<p>​    首先定义 thrift 通讯文件，无论是server端还是clinet端都是基于这个文件进行通信 pingpong.thrift </p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br></pre></td><td class="code"><pre><span class="line">service PingPong &#123;</span><br><span class="line">    string ping(),</span><br><span class="line">    string check_login(</span><br><span class="line">        1: string username,</span><br><span class="line">        2: string password</span><br><span class="line">    ),</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+<p>​    可以看到我们定义了两个方法，一个有参一个无参，第一个方法用来检测接口是否通信成功，也就是传统的ping命令，第二个方法顾名思义，用户登录</p>
+<p>​    然后建立一个thrift_server.py 建立服务端的代码</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br></pre></td><td class="code"><pre><span class="line">import thriftpy2</span><br><span class="line">pingpong_thrift = thriftpy2.load(&quot;pingpong.thrift&quot;, module_name=&quot;pingpong_thrift&quot;)</span><br><span class="line"></span><br><span class="line">from thriftpy2.rpc import make_server</span><br><span class="line"></span><br><span class="line">class Dispatcher(object):</span><br><span class="line">    </span><br><span class="line">    def ping(self):</span><br><span class="line">        return &quot;pong&quot;</span><br><span class="line"></span><br><span class="line">    def check_login(self,username,password):</span><br><span class="line">        print(username,password)</span><br><span class="line">        return &apos;123&apos;</span><br><span class="line"></span><br><span class="line">server = make_server(pingpong_thrift.PingPong, Dispatcher(), &apos;127.0.0.1&apos;, 6000)</span><br><span class="line">server.serve()</span><br></pre></td></tr></table></figure>
+
+<p>​    服务端首先读取通信文件，然后建立起一个服务，监听6000端口，等待客户端请求，实际上服务端的方法也是主要业务逻辑编写的地方。</p>
+<p>​    随后建立一个thrift_client.py文件，编写客户端代码</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br></pre></td><td class="code"><pre><span class="line">import thriftpy2</span><br><span class="line">pingpong_thrift = thriftpy2.load(&quot;pingpong.thrift&quot;, module_name=&quot;pingpong_thrift&quot;)</span><br><span class="line"></span><br><span class="line">from thriftpy2.rpc import make_client</span><br><span class="line"></span><br><span class="line">client = make_client(pingpong_thrift.PingPong, &apos;127.0.0.1&apos;, 6000)</span><br><span class="line"></span><br><span class="line">print(client.ping())</span><br><span class="line"></span><br><span class="line">print(client.check_login(&apos;admin&apos;,&apos;123456&apos;))</span><br></pre></td></tr></table></figure>
+
+<p>​    我们看到客户端同样读取通信文件，严格按照通信文件的方法调用方式进行传参调用，获取返回值</p>
+<p>​    运行服务器端的服务</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">python3 thrift_server.py</span><br></pre></td></tr></table></figure>
+
+<p>​    可以看到服务端和客户端就可以通信了</p>
+<p>​    可以说非常简单，这里着重提到的一点是Thrift的数据编解码，我们知道传统http接口通常以json为数据介质，json中一个对象类似于这样的：{“key”:”content”},但实际上这个对象只有“content”才是我们真正想要的数据，而“key”这个字符串并不是我们实际需要的，只是为了做一个标记，方便我们查找“content”。而Thrift则可以省去“key”这个多余的字符串。</p>
+<p>​    定义thrift的结构里的属性名称实际上在thrift数据二进制编解码是被忽略的（thrift的json编解码未验证），这个名称的作用只是作为生成的OC代码类的属性名称。这也解释了为什么Thrift的二进制编码会比平时使用的json更省流量。同时也说明了只要我们在.thrift文件中定义struct的时候保证struct的属性的顺序不变，即使通信双方使用了各自使用不同的属性名称也不会有问题。</p>
+<p>​    随着请求并发量的提高，简单的HTTP肯定达不到预期的效果，Thrift或许才是你寻找的答案。</p>
+
+        </div>
+
+        
+            <section class="post-copyright">
+                
+                    <p class="copyright-item">
+                        <span>Author:</span>
+                        <span>Haibei</span>
+                    </p>
+                
+                
+                    <p class="copyright-item">
+                        <span>Permalink:</span>
+                        <span><a href="http://yoursite.com/2019/08/05/2019年，你需要Thrift这样一个RPC框架来拯救一下传统HTTP接口了/">http://yoursite.com/2019/08/05/2019年，你需要Thrift这样一个RPC框架来拯救一下传统HTTP接口了/</a></span>
+                    </p>
+                
+                
+                    <p class="copyright-item">
+                        <span>License:</span>
+                        <span>Copyright (c) 2019 <a href="http://creativecommons.org/licenses/by-nc/4.0/">CC-BY-NC-4.0</a> LICENSE</span>
+                    </p>
+                
+                
+                     <p class="copyright-item">
+                         <span>Slogan:</span>
+                         <span>Do you believe in <strong>DESTINY<strong>?</strong></strong></span>
+                     </p>
+                
+
+            </section>
+        
+        <section class="post-tags">
+            <div>
+                <span>Tag(s):</span>
+                <span class="tag">
+                    
+                </span>
+            </div>
+            <div>
+                <a href="javascript:window.history.back();">back</a>
+                <span>· </span>
+                <a href="/">home</a>
+            </div>
+        </section>
+        <section class="post-nav">
+            
+                <a class="prev" rel="prev" href="/2019/08/10/使用flex弹性布局来为微信小程序写自适应页面/">使用flex弹性布局来为微信小程序写自适应页面</a>
+            
+            
+            <a class="next" rel="next" href="/2017/05/04/JWT/">JWT</a>
+            
+        </section>
+
+
+    </article>
+</div>
+
+        </div>
+        <footer id="footer" class="footer">
+    <div class="copyright">
+        <span>© 2014-1019 Hai۰Bei | 友情链接：   <a href="https://zxyyee.cn" target="_blank">张兴亚</a></span>
+    </div>
+</footer>
+    </div>
+</body>
+</html>

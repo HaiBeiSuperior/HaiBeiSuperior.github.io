@@ -1,0 +1,218 @@
+<!DOCTYPE html>
+<html lang="en">
+<head><meta name="generator" content="Hexo 3.9.0">
+    <meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, user-scalable=no, initial-scale=1.0, maximum-scale=1.0, minimum-scale=1.0">
+<meta http-equiv="X-UA-Compatible" content="ie=edge">
+
+
+
+<title>使用flex弹性布局来为微信小程序写自适应页面 | 海北的个人博客</title>
+
+
+
+    <link rel="icon" href="/favicon.ico">
+
+
+
+
+    <!-- stylesheets list from _config.yml -->
+    
+    <link rel="stylesheet" href="/css/style.css">
+    
+
+
+
+    <!-- scripts list from _config.yml -->
+    
+    <script src="/js/script.js"></script>
+    
+    <script src="/js/tocbot.min.js"></script>
+    
+
+
+
+    
+    
+        
+    
+
+
+</head>
+<body>
+    <div class="wrapper">
+        <header>
+    <nav class="navbar">
+        <div class="container">
+            <div class="navbar-header header-logo"><a href="/">ღHaibei&#39;s Blog</a></div>
+            <div class="menu navbar-right">
+                
+                    <a class="menu-item" href="/archives">Blog</a>
+                
+                    <a class="menu-item" href="/category">Categories</a>
+                
+                    <a class="menu-item" href="/tag">Tags</a>
+                
+                    <a class="menu-item" href="/about">About</a>
+                
+                    <a class="menu-item" href="/resume">Resume</a>
+                
+                <input id="switch_default" type="checkbox" class="switch_default">
+                <label for="switch_default" class="toggleBtn"></label>
+            </div>
+
+        </div>
+    </nav>
+
+    
+    <nav class="navbar-mobile" id="nav-mobile">
+        <div class="container">
+            <div class="navbar-header">
+                <div>
+                    <a href="/">ღHaibei&#39;s Blog</a><a id="mobile-toggle-theme">·&nbsp;Light</a>
+                </div>
+                <div class="menu-toggle" onclick="mobileBtn()">&#9776; Menu</div>
+            </div>
+            <div class="menu" id="mobile-menu">
+                
+                    <a class="menu-item" href="/archives">Blog</a>
+                
+                    <a class="menu-item" href="/category">Categories</a>
+                
+                    <a class="menu-item" href="/tag">Tags</a>
+                
+                    <a class="menu-item" href="/about">About</a>
+                
+                    <a class="menu-item" href="/resume">Resume</a>
+                
+            </div>
+        </div>
+    </nav>
+
+</header>
+<script>
+    var mobileBtn = function f() {
+        var toggleMenu = document.getElementsByClassName("menu-toggle")[0];
+        var mobileMenu = document.getElementById("mobile-menu");
+        if(toggleMenu.classList.contains("active")){
+           toggleMenu.classList.remove("active")
+            mobileMenu.classList.remove("active")
+        }else{
+            toggleMenu.classList.add("active")
+            mobileMenu.classList.add("active")
+        }
+    }
+</script>
+        <div class="main">
+            <div class="container">
+    
+    
+
+    
+    <article class="post-wrap">
+        <header class="post-header">
+            <h1 class="post-title">使用flex弹性布局来为微信小程序写自适应页面</h1>
+            
+                <div class="post-meta">
+                    
+                        Author: <a itemprop="author" rel="author" href="/">Haibei</a>
+                    
+
+                    
+                        <span class="post-time">
+                        Date: <a href="#">August 10, 2019&nbsp;&nbsp;20:44:20</a>
+                        </span>
+                    
+                    
+                </div>
+            
+        </header>
+
+        <div class="post-content">
+            <p>​    我们知道，写习惯了前端的人，一般切图后布局页面的话，上手最习惯的是基于盒子模型的浮动布局，依赖 display 属性 + position属性 + float属性，但是浮动布局有一些致命的小问题，比如垂直居中比较费劲，比如著名的<a href="https://v3u.cn/a_id_18" target="_blank" rel="noopener">float坍塌问题</a>，另外有些极端情况下，还得使用模型+clear:both来手动清除浮动，比较麻烦。</p>
+<p>​    于是，W3C 提出了一种新的方案—-Flex 布局，可以简便、完整、响应式地实现各种页面布局。目前，它已经得到了所有浏览器的支持，这意味着，现在就能很安全地使用这项功能，本人在微信小程序页面中尝试了一下弹性布局，个人感觉是：简直太好用了。</p>
+<p>​    Flex 是 Flexible Box 的缩写，意为”弹性布局”，用来为盒状模型提供最大的灵活性。</p>
+<p>​    任何一个容器都可以指定为 Flex 布局。</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">.box&#123;</span><br><span class="line">  display: flex;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+<p>​    不过需要注意一点，就是设为 Flex 布局以后，子元素的float、clear和vertical-align属性将失效。也就是说浮动布局和弹性布局不可共存，二者必居其一。</p>
+<p>​    其实flex布局原理很简单，采用 Flex 布局的元素，称为 Flex 容器（flex container），简称”容器”。它的所有子元素自动成为容器成员，称为 Flex 项目（flex item），简称”项目”。</p>
+<p>​    容器默认存在两根轴：水平的主轴（main axis）和垂直的交叉轴（cross axis）。主轴的开始位置（与边框的交叉点）叫做main start，结束位置叫做main end；交叉轴的开始位置叫做cross start，结束位置叫做cross end。</p>
+<p>​    项目默认沿主轴排列。单个项目占据的主轴空间叫做main size，占据的交叉轴空间叫做cross size。</p>
+<p><img src="https://v3u.cn/v3u/Public/js/editor/attached/image/20190903/20190903092949_52083.png" alt="img"> </p>
+<p>​    弹性布局的容器可以设置下面这些属性： </p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br></pre></td><td class="code"><pre><span class="line">flex-direction</span><br><span class="line">flex-direction属性决定主轴的方向（即项目的排列方向）。</span><br><span class="line">.box &#123;</span><br><span class="line">  flex-direction: row | row-reverse | column | column-reverse;</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line">flex-wrap</span><br><span class="line">默认情况下，项目都排在一条线（又称&quot;轴线&quot;）上。flex-wrap属性定义，如果一条轴线排不下，如何换行。</span><br><span class="line">.box&#123;</span><br><span class="line">  flex-wrap: nowrap | wrap | wrap-reverse;</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line">flex-flow</span><br><span class="line">flex-flow属性是flex-direction属性和flex-wrap属性的简写形式，默认值为row nowrap。</span><br><span class="line">.box &#123;</span><br><span class="line">  flex-flow: &lt;flex-direction&gt; || &lt;flex-wrap&gt;;</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line"></span><br><span class="line">justify-content</span><br><span class="line">justify-content属性定义了项目在主轴上的对齐方式。</span><br><span class="line">.box &#123;</span><br><span class="line">  justify-content: flex-start | flex-end | center | space-between | space-around;</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line"></span><br><span class="line">align-items</span><br><span class="line">align-items属性定义项目在交叉轴上如何对齐。</span><br><span class="line">.box &#123;</span><br><span class="line">  align-items: flex-start | flex-end | center | baseline | stretch;</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line">align-content</span><br><span class="line">align-content属性定义了多根轴线的对齐方式。如果项目只有一根轴线，该属性不起作用。</span><br><span class="line">.box &#123;</span><br><span class="line">  align-content: flex-start | flex-end | center | space-between | space-around | stretch;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+<p>​    说了这么多，都是理论，我们来用弹性布局实战一下，比如我们要模仿瑞辛咖啡小程序中的，首行单列，换行双列，并且自适应整个手机页面的布局 </p>
+<p><img src="https://v3u.cn/v3u/Public/js/editor/attached/image/20190903/20190903093515_29325.png" alt="img"> </p>
+<p>​    页面部分: </p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br><span class="line">42</span><br><span class="line">43</span><br><span class="line">44</span><br><span class="line">45</span><br><span class="line">46</span><br><span class="line">47</span><br><span class="line">48</span><br><span class="line">49</span><br><span class="line">50</span><br><span class="line">51</span><br><span class="line">52</span><br><span class="line">53</span><br><span class="line">54</span><br><span class="line">55</span><br><span class="line">56</span><br><span class="line">57</span><br><span class="line">58</span><br><span class="line">59</span><br><span class="line">60</span><br><span class="line">61</span><br><span class="line">62</span><br><span class="line">63</span><br><span class="line">64</span><br><span class="line">65</span><br><span class="line">66</span><br><span class="line">67</span><br><span class="line">68</span><br><span class="line">69</span><br><span class="line">70</span><br><span class="line">71</span><br><span class="line">72</span><br><span class="line">73</span><br><span class="line">74</span><br><span class="line">75</span><br><span class="line">76</span><br><span class="line">77</span><br></pre></td><td class="code"><pre><span class="line">&lt;template&gt;</span><br><span class="line">   </span><br><span class="line"></span><br><span class="line">        &lt;div class=&quot;container1&quot;&gt;</span><br><span class="line"> </span><br><span class="line">            &lt;div class=&quot;item11&quot;&gt;</span><br><span class="line">            1</span><br><span class="line">            &lt;/div&gt;</span><br><span class="line">            </span><br><span class="line">           &lt;div class=&quot;item12&quot;&gt;</span><br><span class="line">            </span><br><span class="line">              &lt;div class=&quot;item1&quot;&gt;</span><br><span class="line">                  3</span><br><span class="line">                  &lt;/div&gt;</span><br><span class="line"></span><br><span class="line"></span><br><span class="line">                  &lt;div class=&quot;item1&quot;&gt;</span><br><span class="line">                      3</span><br><span class="line">                      &lt;/div&gt;</span><br><span class="line">            </span><br><span class="line">          &lt;/div&gt;</span><br><span class="line">            </span><br><span class="line">            &lt;div class=&quot;item12&quot;&gt;</span><br><span class="line">              </span><br><span class="line">                &lt;div class=&quot;item1&quot;&gt;</span><br><span class="line">                    3</span><br><span class="line">                    &lt;/div&gt;</span><br><span class="line">  </span><br><span class="line">  </span><br><span class="line">                    &lt;div class=&quot;item1&quot;&gt;</span><br><span class="line">                        3</span><br><span class="line">                        &lt;/div&gt;</span><br><span class="line"></span><br><span class="line"></span><br><span class="line">            &lt;/div&gt;</span><br><span class="line">            </span><br><span class="line">         </span><br><span class="line">            </span><br><span class="line">  </span><br><span class="line"></span><br><span class="line"></span><br><span class="line">      </span><br><span class="line"></span><br><span class="line">    &lt;/div&gt;</span><br><span class="line">    &lt;/template&gt;</span><br><span class="line">    css部分:</span><br><span class="line"></span><br><span class="line">    </span><br><span class="line"></span><br><span class="line">.container1&#123;</span><br><span class="line">  height: 100%;</span><br><span class="line">  width:100%;</span><br><span class="line">  background-color:beige;</span><br><span class="line">  display:flex;</span><br><span class="line">  flex-flow:column;</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line"></span><br><span class="line">.item11&#123;</span><br><span class="line">  height:300rpx;</span><br><span class="line">  background-color:cyan;</span><br><span class="line">  border: 1px solid #fff</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line">.item12&#123;</span><br><span class="line">  height:300rpx;</span><br><span class="line">  background-color:cyan;</span><br><span class="line">  border: 1px solid #fff;</span><br><span class="line">  display:flex;</span><br><span class="line">&#125;</span><br><span class="line"> </span><br><span class="line">.item1&#123;</span><br><span class="line">  height:300rpx;</span><br><span class="line">  width: 50%;</span><br><span class="line">  background-color:cyan;</span><br><span class="line">  border: 1px solid #fff</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+<p>​    轻松搞定，代码量比浮动布局少了很多，简直完美。 </p>
+
+        </div>
+
+        
+            <section class="post-copyright">
+                
+                    <p class="copyright-item">
+                        <span>Author:</span>
+                        <span>Haibei</span>
+                    </p>
+                
+                
+                    <p class="copyright-item">
+                        <span>Permalink:</span>
+                        <span><a href="http://yoursite.com/2019/08/10/使用flex弹性布局来为微信小程序写自适应页面/">http://yoursite.com/2019/08/10/使用flex弹性布局来为微信小程序写自适应页面/</a></span>
+                    </p>
+                
+                
+                    <p class="copyright-item">
+                        <span>License:</span>
+                        <span>Copyright (c) 2019 <a href="http://creativecommons.org/licenses/by-nc/4.0/">CC-BY-NC-4.0</a> LICENSE</span>
+                    </p>
+                
+                
+                     <p class="copyright-item">
+                         <span>Slogan:</span>
+                         <span>Do you believe in <strong>DESTINY<strong>?</strong></strong></span>
+                     </p>
+                
+
+            </section>
+        
+        <section class="post-tags">
+            <div>
+                <span>Tag(s):</span>
+                <span class="tag">
+                    
+                </span>
+            </div>
+            <div>
+                <a href="javascript:window.history.back();">back</a>
+                <span>· </span>
+                <a href="/">home</a>
+            </div>
+        </section>
+        <section class="post-nav">
+            
+                <a class="prev" rel="prev" href="/2019/08/25/MySQL主从分离/">MySQL主从分离</a>
+            
+            
+            <a class="next" rel="next" href="/2019/08/05/2019年，你需要Thrift这样一个RPC框架来拯救一下传统HTTP接口了/">2019年，你需要Thrift这样一个RPC框架来拯救一下传统HTTP接口了</a>
+            
+        </section>
+
+
+    </article>
+</div>
+
+        </div>
+        <footer id="footer" class="footer">
+    <div class="copyright">
+        <span>© 2014-1019 Hai۰Bei | 友情链接：   <a href="https://zxyyee.cn" target="_blank">张兴亚</a></span>
+    </div>
+</footer>
+    </div>
+</body>
+</html>
