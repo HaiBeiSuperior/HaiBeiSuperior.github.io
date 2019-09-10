@@ -1,0 +1,273 @@
+<!DOCTYPE html>
+<html lang="en">
+<head><meta name="generator" content="Hexo 3.9.0">
+    <meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, user-scalable=no, initial-scale=1.0, maximum-scale=1.0, minimum-scale=1.0">
+<meta http-equiv="X-UA-Compatible" content="ie=edge">
+
+
+
+<title>利用基于GoLang的Hugo配合nginx来打造属于自己的纯静态博客系统 | 海北的个人博客</title>
+
+
+
+    <link rel="icon" href="/favicon.ico">
+
+
+
+
+    <!-- stylesheets list from _config.yml -->
+    
+    <link rel="stylesheet" href="/css/style.css">
+    
+
+
+
+    <!-- scripts list from _config.yml -->
+    
+    <script src="/js/script.js"></script>
+    
+    <script src="/js/tocbot.min.js"></script>
+    
+
+
+
+    
+    
+        
+    
+
+
+</head>
+<body>
+    <div class="wrapper">
+        <header>
+    <nav class="navbar">
+        <div class="container">
+            <div class="navbar-header header-logo"><a href="/">ღHaibei&#39;s Blog</a></div>
+            <div class="menu navbar-right">
+                
+                    <a class="menu-item" href="/archives">Blog</a>
+                
+                    <a class="menu-item" href="/category">Categories</a>
+                
+                    <a class="menu-item" href="/tag">Tags</a>
+                
+                    <a class="menu-item" href="/about">About</a>
+                
+                    <a class="menu-item" href="/resume">Resume</a>
+                
+                <input id="switch_default" type="checkbox" class="switch_default">
+                <label for="switch_default" class="toggleBtn"></label>
+            </div>
+
+        </div>
+    </nav>
+
+    
+    <nav class="navbar-mobile" id="nav-mobile">
+        <div class="container">
+            <div class="navbar-header">
+                <div>
+                    <a href="/">ღHaibei&#39;s Blog</a><a id="mobile-toggle-theme">·&nbsp;Light</a>
+                </div>
+                <div class="menu-toggle" onclick="mobileBtn()">&#9776; Menu</div>
+            </div>
+            <div class="menu" id="mobile-menu">
+                
+                    <a class="menu-item" href="/archives">Blog</a>
+                
+                    <a class="menu-item" href="/category">Categories</a>
+                
+                    <a class="menu-item" href="/tag">Tags</a>
+                
+                    <a class="menu-item" href="/about">About</a>
+                
+                    <a class="menu-item" href="/resume">Resume</a>
+                
+            </div>
+        </div>
+    </nav>
+
+</header>
+<script>
+    var mobileBtn = function f() {
+        var toggleMenu = document.getElementsByClassName("menu-toggle")[0];
+        var mobileMenu = document.getElementById("mobile-menu");
+        if(toggleMenu.classList.contains("active")){
+           toggleMenu.classList.remove("active")
+            mobileMenu.classList.remove("active")
+        }else{
+            toggleMenu.classList.add("active")
+            mobileMenu.classList.add("active")
+        }
+    }
+</script>
+        <div class="main">
+            <div class="container">
+    
+    
+
+    
+    <article class="post-wrap">
+        <header class="post-header">
+            <h1 class="post-title">利用基于GoLang的Hugo配合nginx来打造属于自己的纯静态博客系统</h1>
+            
+                <div class="post-meta">
+                    
+                        Author: <a itemprop="author" rel="author" href="/">Haibei</a>
+                    
+
+                    
+                        <span class="post-time">
+                        Date: <a href="#">September 9, 2019&nbsp;&nbsp;15:16:01</a>
+                        </span>
+                    
+                    
+                </div>
+            
+        </header>
+
+        <div class="post-content">
+            <p>Go lang无疑是目前的当红炸子鸡，极大地提高了后端编程的效率，同时有着极高的性能。借助Go语言我们 可以用同步的方式写出高并发的服务端软件，同时，Go语言也是云原生第一语言，Docker，Kubernetes等等著名的项目都是使用Go语言实现的。</p>
+<p>​    Hugo 是基于 Go 语言的静态网站生成器。</p>
+<p>​    什么是静态网站生成器？顾名思义，就是以最快的速度生成一个高可用的web页面，我们知道Django作为一款非常流行的框架被广泛应用，但是部署起来实在是太麻烦了，各种命令各种配置，动态页面必然要涉及数据库的配置和操作，另外只要涉及数据库操作，你就不得不考虑sql注入等一系列的安全因素。而纯静态页面则没有这个烦恼，如果我们只需要一个简单的站点，一些简单的功能和页面，比如博客，我们只想以极简的方式用markdown语法写下文字或者代码，让服务器访问纯静态页面，这就是静态网站生成器可以提供给我们的好处。</p>
+<p>​    为啥选择Hugo?</p>
+<p>​    Hugo是一种go语言编写的静态网站生成器。适用于搭建个人blog、公司主页、help等网站，是一种小型的CMS系统。静态站点的好处就是快速、安全、易于部署，方便管理。</p>
+<p>​    Hugo的优点包含但不限于：</p>
+<p>​    得益于Go的高性能，性能很快    </p>
+<p>​    世界上最快的静态网站生成工具，5秒生成6000个页面</p>
+<p>​    文档为Markdown格式,语法超简单</p>
+<p>​    Hugo 可以做静态文件生成工具，还是高性能web 服务；</p>
+<p>​    丰富的站点迁移工具，可以将wordpress，Ghost，Jekyll，DokuWiki，Blogger轻松迁移至 Hugo</p>
+<p>​    超详细的文档</p>
+<p>​    活跃的社区</p>
+<p>​    更加自由的内容组织方式</p>
+<p>​    丰富的主题模板，可以让你的网站更加炫目多彩</p>
+<p>​    多环境支持：macos ，linux，windows</p>
+<p>首先，可以去go的官网网站下载安装包  <a href="https://golang.org/dl/" target="_blank" rel="noopener">https://golang.org/dl/</a> 然后直接双击安装即可，不需要配置环境变量，因为安装过程自动配置，安装完毕后，打开命令行，输入</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">go version</span><br></pre></td></tr></table></figure>
+
+<p>显示主版本号即表示安装成功</p>
+<p>然后，可以进行hugo的在线源码编译安装，打开命令行，输入下面的命令</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">go get -u -v github.com/spf13/hugo</span><br><span class="line">go build -o hugo main.go</span><br><span class="line">mv hugo $GOPATH/bin</span><br></pre></td></tr></table></figure>
+
+<p>如果你不想在线编译安装，也可以去hugo的官网 <a href="https://github.com/gohugoio/hugo/releases" target="_blank" rel="noopener">https://github.com/gohugoio/hugo/releases</a> 下载稳定版的压缩包，解压之后配置一下环境变量也可以</p>
+<p>装完以后，在命令行内输入</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">hugo version</span><br></pre></td></tr></table></figure>
+
+<p>打印出版本号即表示hugo安装成功</p>
+<p>在命令行中输入命令</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">hugo new site hugo_blog</span><br></pre></td></tr></table></figure>
+
+<p>就生成了一个名字为hugo_blog的新站点，可以感受到速度非常快，和vue.js创建新站点的速度比起来简直天差地别</p>
+<p>打开配置文件config.toml，这是hugo的站点的相关配置，可以进行一些个性化的定制，改为下面这样：</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br></pre></td><td class="code"><pre><span class="line">baseURL = &quot;/&quot;</span><br><span class="line">languageCode = &quot;en-us&quot;</span><br><span class="line">title = &quot;我的博客&quot;</span><br><span class="line">#指定主题</span><br><span class="line">theme = &quot;hyde&quot;</span><br><span class="line"></span><br><span class="line">[params]</span><br><span class="line">#博客简介</span><br><span class="line">description = &quot;这里是海北的个人博客&quot;</span><br><span class="line">#博客主题颜色</span><br><span class="line">themeColor = &quot;theme-base-08&quot;</span><br></pre></td></tr></table></figure>
+
+<p>可以看到我们制定了一个主题hyde，添加了Theme后的站点才有血有肉，丰富多彩。</p>
+<p>更多的主题可以在这个上面下载，都是免费而开源的：<a href="https://themes.gohugo.io/" target="_blank" rel="noopener">https://themes.gohugo.io/</a></p>
+<p>进入到站点内的themes目录，输入命令下载hyde主题，hugo有很多漂亮的主题可以选择</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">git clone https://github.com/spf13/hyde.git</span><br></pre></td></tr></table></figure>
+
+<p>结构和样式有了，我们还没有内容。我们来创建站点的第一篇文章</p>
+<p>输入命令</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">hugo new one.md</span><br></pre></td></tr></table></figure>
+
+<p>hugo在content下创建one.md文件，我们编写一些文件内容：</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br></pre></td><td class="code"><pre><span class="line">---</span><br><span class="line">date: &quot;2019-05-23&quot;</span><br><span class="line">title: &quot;第一篇文章&quot;</span><br><span class="line">---</span><br><span class="line"></span><br><span class="line">### 你好啊</span><br><span class="line"></span><br><span class="line">123123123</span><br><span class="line"></span><br><span class="line"></span><br><span class="line">​</span><br></pre></td></tr></table></figure>
+
+<p>print(‘hello world’)<br>​<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line">```</span><br><span class="line"></span><br><span class="line"> </span><br><span class="line"></span><br><span class="line">然后在命令行中输入</span><br></pre></td></tr></table></figure></p>
+<p>hugo server</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br></pre></td><td class="code"><pre><span class="line"></span><br><span class="line">来热启动项目</span><br><span class="line"></span><br><span class="line">![img](https://v3u.cn/v3u/Public/js/editor/attached/image/20190523/20190523032959_63098.png)</span><br><span class="line"></span><br><span class="line">可以看到已经在1313端口起了一个hugo服务</span><br><span class="line"></span><br><span class="line">访问一下</span><br><span class="line"></span><br><span class="line"></span><br><span class="line"></span><br><span class="line">至此，非常快速而简单博客已经做好了，那么如何部署到线上呢？非常简单输入命令进行打包操作：</span><br></pre></td></tr></table></figure>
+
+<p>hugo –baseUrl=”/“</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br></pre></td><td class="code"><pre><span class="line"></span><br><span class="line">hugo就会把你的站点生成纯静态页面，然后打包到public文件夹</span><br><span class="line"></span><br><span class="line">将public上传到阿里云服务器的root目录下</span><br><span class="line"></span><br><span class="line">修改nginx配置文件</span><br></pre></td></tr></table></figure>
+
+<p>vim /etc/nginx/conf.d/default.conf</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line"></span><br><span class="line">监听80端口，并且项目目录指定/root/public</span><br></pre></td></tr></table></figure>
+
+<p>server {<br>    listen       80;<br>    server_name  localhost;</p>
+<pre><code>access_log      /root/md_vue_access.log;
+error_log       /root/md_vue_error.log;
+
+
+client_max_body_size 75M;
+
+
+location / {
+
+    root /root/public;
+    index index.html;
+
+}
+
+error_log    /root/md_vue/error.log    error;</code></pre><p>}<br>```</p>
+<p>重启nginx systemctl restart nginx.service 然后访问一下</p>
+<p>得益于hugo的快速而高效，三分钟之内你就拥有了一个纯静态的个人博客</p>
+
+        </div>
+
+        
+            <section class="post-copyright">
+                
+                    <p class="copyright-item">
+                        <span>Author:</span>
+                        <span>Haibei</span>
+                    </p>
+                
+                
+                    <p class="copyright-item">
+                        <span>Permalink:</span>
+                        <span><a href="http://yoursite.com/2019/09/09/利用基于GoLang的Hugo配合nginx来打造属于自己的纯静态博客系统/">http://yoursite.com/2019/09/09/利用基于GoLang的Hugo配合nginx来打造属于自己的纯静态博客系统/</a></span>
+                    </p>
+                
+                
+                    <p class="copyright-item">
+                        <span>License:</span>
+                        <span></span>
+                    </p>
+                
+                
+                     <p class="copyright-item">
+                         <span>Slogan:</span>
+                         <span>Do you believe in <strong>DESTINY<strong>?</strong></strong></span>
+                     </p>
+                
+
+            </section>
+        
+        <section class="post-tags">
+            <div>
+                <span>Tag(s):</span>
+                <span class="tag">
+                    
+                </span>
+            </div>
+            <div>
+                <a href="javascript:window.history.back();">back</a>
+                <span>· </span>
+                <a href="/">home</a>
+            </div>
+        </section>
+        <section class="post-nav">
+            
+                <a class="prev" rel="prev" href="/2019/09/09/使用Hexo建立一个轻量、简易、高逼格的博客/">使用Hexo建立一个轻量、简易、高逼格的博客</a>
+            
+            
+            <a class="next" rel="next" href="/2019/09/05/基于Docker-compose搭建Redis高可用集群-哨兵模式（Redis-Sentinel）/">基于Docker-compose搭建Redis高可用集群-哨兵模式（Redis-Sentinel）</a>
+            
+        </section>
+
+
+    </article>
+</div>
+
+        </div>
+        <footer id="footer" class="footer">
+    <div class="copyright">
+        <span>© 2014-1019 Hai۰Bei | 友情链接：   <a href="https://zxyyee.cn" target="_blank">张兴亚</a></span>
+    </div>
+</footer>
+    </div>
+</body>
+</html>

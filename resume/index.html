@@ -203,49 +203,60 @@
 <h3 id="项目经历"><a href="#项目经历" class="headerlink" title="项目经历"></a>项目经历</h3><hr>
 <p><strong>项目一：轻轻家教（学而思）</strong></p>
 <p>&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp轻轻家教基于课程知识体系，涉及到在线学习、上门教学、在线答疑、在线测评、在线辅导等方面，为学生、教职工以及家长提供一个全天候、线上线下的学习平台，提升教学体验。模块有：系统管理、讲师管理、课程管理、广告管理等。</p>
-<p>技术栈：Tornado<strong>/</strong>MySQL<strong>/</strong>Celery<strong>/</strong>Websocket<strong>/</strong>Fastdfs<strong>/</strong>Bootstrap<strong>/</strong>Vue.js<strong>/</strong>Thrift<strong>/</strong>Nginx</p>
+<p>个人职责：在线学习、系统权限设计、讲师管理</p>
+            <p>技术栈：Tornado<strong>/</strong>MySQL<strong>/</strong>Celery<strong>/</strong>Websocket<strong>/</strong>Fastdfs<strong>/</strong>Flex<strong>/</strong>Vue.js<strong>/</strong>Thrift<strong>/</strong>Nginx</p>
 <p>技术要点：</p>
 <ul>
-<li>使用Celery实现异步邮箱和短信推送</li>
-<li>前端采用Bootstrap响应式设计、Vue.js框架</li>
-<li>使用<strong>Redisearch</strong>打造全文检索引擎，百万级数据可以达到单次检索10毫秒以内的速度</li>
-<li>利用<strong>Docker</strong>进行服务封装和业务解耦，使用<strong>Docker-compose</strong>批量管理容器集群，用<strong>Docker-file</strong>编写部署脚本 </li>
+<li>前端采用 Flex 弹性布局</li>
+<li>部署 MySQL 集群，采用一主一从策略完成主从分离从而实现读写分离目的</li>
+<li>使用Redisearch打造全文检索引擎，百万级数据可以达到单次检索10毫秒以内的速度</li>
+<li>使用 Docker-compose 搭建 Redis 高负载高可用集群（Redis-Sentinel）模式 </li>
 <li>采用FastDFS分布式文件系统存储教学视频，减少磁盘的使用空间 </li>
 <li>基于RBAC权限管理机制，实现用户权限控制</li>
-<li>使用Jenkins实现自动化部署 </li>
-<li>利用Websocket实现实时消息推送</li>
-<li>后期使用<strong>Thrift</strong>框架RPC协议架构对传统的http接口进行重构，提高了整体接口的性能和吞吐量 </li>
-<li>Nginx反向代理Tornado，采用加权策略的负载均衡技术，后台服务统一使用<strong>SuperVisor</strong>进行管理 </li>
+<li>利用Websocket实现实时消息推送 </li>
+<li>后期使用Thrift框架RPC协议架构对传统的http接口进行重构，提高了整体接口的性能和吞吐量 </li>
 </ul>
 <hr>
 <p><strong>项目二：轻轻家教—-CRM管理系统</strong></p>
 <p>​&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbspCRM客户管理系统是一套客户销售与服务跟进管理系统，主要侧重于对客户销售与服务过程进行持续跟踪与管理。该系统主要的功能模块有：用户档案管理、销售管理、售后管理、收银缴费、员工管理、库存管理、市场活动管理、数据分析中心等一些实际功能。</p>
-<p>技术栈：Tornado/Vue.js/Numy,Pandas,Matplotlib,SuperVisor</p>
+<p>个人职责：</p>
+            <p>&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp用户档案管理，详细记录用户的消费情况，用户的基本信息，学习情况，讲师评 价，家长反馈沟通记录
+		等，随时了
+                &nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp解用户的详细信息，为各地区线下营销策略提 供全面详细的数据支持。使用 Celery 定时任务
+		来实现用户生日时发
+                &nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp送邮件或短信 祝福。使用自然语言情感分析来分析讲师及课程的用户情感倾向，从
+		评价文本中挖掘出该讲师/课程
+                &nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp优点与不足，提炼不同的产品卖点。
+</p>
+<p>技术栈：Tornado/Vue.js/Gensim/Celery/FastDFS </p>
 <p>技术要点：</p>
 <ul>
-<li>利用 Docker搭建FastDFS对海量数据进行分布式存储，视频指纹避免重复文件问题, 为服务端节约了大约 30%的硬盘空间 </li>
-<li>利用 SuperVisor 守护服务端进程提高用户体验 </li>
-<li>利用 Celery 实现异步邮箱和短信推送 </li>
-<li>利用 Numpy，Pandas，Matplotlib 对顾客的信息进行数据分析,调整销售策略</li>
-<li>利用协同过滤算法的 CF 对用户的标签进行智能推荐 </li>
+<li>前端采用 Flex 弹性布局  </li>
+<li>利用 Docker 搭建 FastDFS 对海量数据进行分布式存储 </li>
+<li>使用 Motor 来异步读写 MongoDB，提高效率 </li>
+<li>利用 Gensim 去做 Word2vec 的处理，用 Sklearn 当中的 SVM 进行建模</li>
 </ul>
 <hr>
 <p><strong>项目三：钦龙点金</strong></p>
 <p>​&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp钦龙点金app是一款基于金融理财应用，涉及视频直播、实盘开户、学习培训、互动交流、财经日历、财经数据等方面，为广大投资爱好者提供学习、交流等便捷的理财服务。主要有三大模块：应用平台首页、后台个人中心、应用后台管理。 </p>
-<p>技术栈：Tornado<strong>/</strong>MySQL<strong>/</strong>JWT<strong>/</strong>RBAC<strong>/</strong>Echart<strong>/</strong>Redis<strong>/</strong>Celery<strong>/</strong>RabbitMQ<strong>/</strong>Nginx</p>
+<p>个人职责：</p>
+            <p>​&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp应用平台首页，负责首页、列表页以及详情页的数据渲染，通过 MongoDB 将爬取 到的各国财经资讯、
+
+		政要等数​&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp据实时推送，将财经数据可视化。
+</p>
+<p>技术栈：Tornado<strong>/</strong>MySQL<strong>/</strong>MongoDB<strong>/</strong>RBAC<strong>/</strong>JWT<strong>/</strong>Echart<strong>/</strong>Redis<strong>/</strong>Celery<strong>/</strong>RabbitMQ<strong>/</strong>Nginx</p>
 <p>技术要点：</p>
 <ul>
-<li>项目采用MVT框架，模块化管理 </li>
-<li>利用JWT来保证接口的安全</li>
-<li>接口以Tornado框架中Restful风格开发</li>
-<li>部署MySQL集群，采用一主一从策略完成主从分离从而实现读写分离目的 </li>
-<li>利用Websocket实现消息主动推送，改造前端传统轮询技术框架，减少了约30%的网络请求数，节约了大约一半的可用带宽 </li>
-<li>利用MySQL存储数据，使用Celery实现异步邮箱和短信推送</li>
-<li>通过Echart实现数据可视化 </li>
-<li>利用Nginx反向代理后台Tornado的平台接口，并且针对性使用Nginx负载均衡策略</li>
+<li>利用 JWT 来保证接口的安全  </li>
+<li>接口以 Restful 风格开发</li>
+<li>利用 Websocket 实现消息主动推送，改造前端传统轮询技术框架，减少了约 30%的网 络请求数，节约了大约一半的可用带宽 </li>
+<li>利用 MongoDB 存储数据，使用 Celery 实现异步邮箱和短信推送 </li>
+<li>通过 Echart 实现数据可视化 </li>
+<li>利用 Nginx 反向代理后台 Tornado 的平台接口，并且针对性使用 Nginx 负载均衡策略</li>
 </ul>
 <h3 id="兴趣与奖项"><a href="#兴趣与奖项" class="headerlink" title="兴趣与奖项"></a>兴趣与奖项</h3><hr>
 <p>崇尚极客文化与开源精神，有海外工作经验（base：新加坡）</p>
+<p>多次随团队前往新加坡进行技术交流与业务交流 </p>
 <p>活跃在stackoverflow、CSDN等技术论坛，热衷解决问题和探索</p>
 <p>大学期间曾获得过计算机程序设计大赛三等奖</p>
 

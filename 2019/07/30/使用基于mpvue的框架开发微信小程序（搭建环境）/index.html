@@ -1,0 +1,228 @@
+<!DOCTYPE html>
+<html lang="en">
+<head><meta name="generator" content="Hexo 3.9.0">
+    <meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, user-scalable=no, initial-scale=1.0, maximum-scale=1.0, minimum-scale=1.0">
+<meta http-equiv="X-UA-Compatible" content="ie=edge">
+
+
+
+<title>使用基于mpvue的框架开发微信小程序（搭建环境） | 海北的个人博客</title>
+
+
+
+    <link rel="icon" href="/favicon.ico">
+
+
+
+
+    <!-- stylesheets list from _config.yml -->
+    
+    <link rel="stylesheet" href="/css/style.css">
+    
+
+
+
+    <!-- scripts list from _config.yml -->
+    
+    <script src="/js/script.js"></script>
+    
+    <script src="/js/tocbot.min.js"></script>
+    
+
+
+
+    
+    
+        
+    
+
+
+</head>
+<body>
+    <div class="wrapper">
+        <header>
+    <nav class="navbar">
+        <div class="container">
+            <div class="navbar-header header-logo"><a href="/">ღHaibei&#39;s Blog</a></div>
+            <div class="menu navbar-right">
+                
+                    <a class="menu-item" href="/archives">Blog</a>
+                
+                    <a class="menu-item" href="/category">Categories</a>
+                
+                    <a class="menu-item" href="/tag">Tags</a>
+                
+                    <a class="menu-item" href="/about">About</a>
+                
+                    <a class="menu-item" href="/resume">Resume</a>
+                
+                <input id="switch_default" type="checkbox" class="switch_default">
+                <label for="switch_default" class="toggleBtn"></label>
+            </div>
+
+        </div>
+    </nav>
+
+    
+    <nav class="navbar-mobile" id="nav-mobile">
+        <div class="container">
+            <div class="navbar-header">
+                <div>
+                    <a href="/">ღHaibei&#39;s Blog</a><a id="mobile-toggle-theme">·&nbsp;Light</a>
+                </div>
+                <div class="menu-toggle" onclick="mobileBtn()">&#9776; Menu</div>
+            </div>
+            <div class="menu" id="mobile-menu">
+                
+                    <a class="menu-item" href="/archives">Blog</a>
+                
+                    <a class="menu-item" href="/category">Categories</a>
+                
+                    <a class="menu-item" href="/tag">Tags</a>
+                
+                    <a class="menu-item" href="/about">About</a>
+                
+                    <a class="menu-item" href="/resume">Resume</a>
+                
+            </div>
+        </div>
+    </nav>
+
+</header>
+<script>
+    var mobileBtn = function f() {
+        var toggleMenu = document.getElementsByClassName("menu-toggle")[0];
+        var mobileMenu = document.getElementById("mobile-menu");
+        if(toggleMenu.classList.contains("active")){
+           toggleMenu.classList.remove("active")
+            mobileMenu.classList.remove("active")
+        }else{
+            toggleMenu.classList.add("active")
+            mobileMenu.classList.add("active")
+        }
+    }
+</script>
+        <div class="main">
+            <div class="container">
+    
+    
+
+    
+    <article class="post-wrap">
+        <header class="post-header">
+            <h1 class="post-title">使用基于mpvue的框架开发微信小程序（搭建环境）</h1>
+            
+                <div class="post-meta">
+                    
+                        Author: <a itemprop="author" rel="author" href="/">Haibei</a>
+                    
+
+                    
+                        <span class="post-time">
+                        Date: <a href="#">July 30, 2019&nbsp;&nbsp;20:53:06</a>
+                        </span>
+                    
+                    
+                </div>
+            
+        </header>
+
+        <div class="post-content">
+            <p>​    美团很早就开源了mpvue这个项目，如此看来，美团可不仅仅是一家团购网站，真正的技术驱动型企业，使得我们多了一种用来开发微信小程序的框架选项。由于mpvue框架是完全基于Vue框架的（重写了其runtime和compiler），因此在用法上面是高度和Vue一致的（某些功能由于受限于小程序环境本身的原因而不能使用，但是瑕不掩瑜），这给使用过Vue开发Web应用的前端开发者提供了极低的门槛来开发小程序。</p>
+<p>​    搭建所需的软件环境，首先mpvue是基于vue.js，同时也需要vue-cli脚手架，注意一点：你的node环境版本必须大于9.0，否则会出现和新版mpvue不兼容的情况，首先去微信公众号平台注册开发者账号： <a href="https://mp.weixin.qq.com/" target="_blank" rel="noopener">https://mp.weixin.qq.com</a>  记得验证一下开发者身份，另外获取appid，并且点击生成appsecret秘钥，一般审核速度很快，大概一天就会通过。附上微信小程序开发文档：<a href="https://developers.weixin.qq.com/miniprogram/dev/framework/" target="_blank" rel="noopener">https://developers.weixin.qq.com/miniprogram/dev/framework/</a></p>
+<p><img src="https://v3u.cn/v3u/Public/js/editor/attached/image/20190826/20190826020248_68338.png" alt="img"> </p>
+<figure class="highlight py"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br></pre></td><td class="code"><pre><span class="line">npm cache clean --force</span><br><span class="line"></span><br><span class="line">npm set registry https://registry.npmjs.org/</span><br><span class="line"></span><br><span class="line">npm install npm -g</span><br><span class="line"></span><br><span class="line">npm install -g vue-cli</span><br><span class="line"></span><br><span class="line">npm cache clean --force</span><br></pre></td></tr></table></figure>
+
+<pre><code>安装好之后，查看node版本是否大于9.0 node -v</code></pre><p>​    之后，运行命令，创建一个mpvue的工程</p>
+<figure class="highlight py"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">vue init mpvue/mpvue-quickstart mpvue</span><br></pre></td></tr></table></figure>
+
+<p><img src="https://v3u.cn/v3u/Public/js/editor/attached/image/20190826/20190826015419_44189.png" alt="img"> </p>
+<p>​    图上的appid就是注册时获取到的</p>
+<p>​    随后进入到项目目录中：cd mpvue</p>
+<p>​    输入命令安装依赖</p>
+<figure class="highlight py"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">npm install</span><br></pre></td></tr></table></figure>
+
+<p>安装成功后，在项目目录下输入npm run dev 启动项目 </p>
+<p><img src="https://v3u.cn/v3u/Public/js/editor/attached/image/20190826/20190826020212_12687.png" alt="img"> </p>
+<p>mpvue的项目结构是这样的： </p>
+<p><img src="https://v3u.cn/v3u/Public/js/editor/attached/image/20190826/20190826020404_34999.png" alt="img"> </p>
+<p>​    可以看到，和传统的vue项目没有任何差别，简直太友好了</p>
+<p>​    此时，可以去下载一个微信小程序开发者工具：<a href="https://developers.weixin.qq.com/miniprogram/dev/devtools/download.html" target="_blank" rel="noopener">https://developers.weixin.qq.com/miniprogram/dev/devtools/download.html</a></p>
+<p>​    选择适合自己系统的版本下载，这里我下载mac版，缺点是体积有点略大，安装后要500多m，希望腾讯以后可以压缩一下，轻量级开发工具应该小巧轻便。</p>
+<p>​    打开微信小程序开发工具，点击➕新建项目</p>
+<p><img src="https://v3u.cn/v3u/Public/js/editor/attached/image/20190826/20190826020803_40950.png" alt="img"> </p>
+<p>​    选择导入项目，输入项目目录以及appid </p>
+<p><img src="https://v3u.cn/v3u/Public/js/editor/attached/image/20190826/20190826020901_60912.png" alt="img"> </p>
+<p>​    最后打开导入的项目，这时候需要耐心等待一小会，不要着急</p>
+<p>​    成功打开后，就可以看到界面了</p>
+<p><img src="https://v3u.cn/v3u/Public/js/editor/attached/image/20190826/20190826021045_26005.png" alt="img"> </p>
+<p>​    此时只要修改对应的vue组件，小程序就会实时进行更改，不过需要注意一点，新建组件的时候，需要手动重启mpvue项目:npm run dev</p>
+<p>​    是不是很简单呢，如果你是一位精通vue的开发者，那么开发微信小程序对于你来说也就是 a piece of cake</p>
+
+        </div>
+
+        
+            <section class="post-copyright">
+                
+                    <p class="copyright-item">
+                        <span>Author:</span>
+                        <span>Haibei</span>
+                    </p>
+                
+                
+                    <p class="copyright-item">
+                        <span>Permalink:</span>
+                        <span><a href="http://yoursite.com/2019/07/30/使用基于mpvue的框架开发微信小程序（搭建环境）/">http://yoursite.com/2019/07/30/使用基于mpvue的框架开发微信小程序（搭建环境）/</a></span>
+                    </p>
+                
+                
+                    <p class="copyright-item">
+                        <span>License:</span>
+                        <span></span>
+                    </p>
+                
+                
+                     <p class="copyright-item">
+                         <span>Slogan:</span>
+                         <span>Do you believe in <strong>DESTINY<strong>?</strong></strong></span>
+                     </p>
+                
+
+            </section>
+        
+        <section class="post-tags">
+            <div>
+                <span>Tag(s):</span>
+                <span class="tag">
+                    
+                </span>
+            </div>
+            <div>
+                <a href="javascript:window.history.back();">back</a>
+                <span>· </span>
+                <a href="/">home</a>
+            </div>
+        </section>
+        <section class="post-nav">
+            
+                <a class="prev" rel="prev" href="/2019/08/05/2019年，你需要Thrift这样一个RPC框架来拯救一下传统HTTP接口了/">2019年，你需要Thrift这样一个RPC框架来拯救一下传统HTTP接口了</a>
+            
+            
+            <a class="next" rel="next" href="/2019/07/25/浏览器同源策略与ajax跨域方法汇总/">浏览器同源策略与ajax跨域方法汇总</a>
+            
+        </section>
+
+
+    </article>
+</div>
+
+        </div>
+        <footer id="footer" class="footer">
+    <div class="copyright">
+        <span>© 2014-1019 Hai۰Bei | 友情链接：   <a href="https://zxyyee.cn" target="_blank">张兴亚</a></span>
+    </div>
+</footer>
+    </div>
+</body>
+</html>

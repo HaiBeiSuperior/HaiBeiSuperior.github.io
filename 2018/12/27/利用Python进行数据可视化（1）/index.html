@@ -1,0 +1,307 @@
+<!DOCTYPE html>
+<html lang="en">
+<head><meta name="generator" content="Hexo 3.9.0">
+    <meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, user-scalable=no, initial-scale=1.0, maximum-scale=1.0, minimum-scale=1.0">
+<meta http-equiv="X-UA-Compatible" content="ie=edge">
+
+
+
+<title>利用Python进行数据可视化（1） | 海北的个人博客</title>
+
+
+
+    <link rel="icon" href="/favicon.ico">
+
+
+
+
+    <!-- stylesheets list from _config.yml -->
+    
+    <link rel="stylesheet" href="/css/style.css">
+    
+
+
+
+    <!-- scripts list from _config.yml -->
+    
+    <script src="/js/script.js"></script>
+    
+    <script src="/js/tocbot.min.js"></script>
+    
+
+
+
+    
+    
+        
+    
+
+
+</head>
+<body>
+    <div class="wrapper">
+        <header>
+    <nav class="navbar">
+        <div class="container">
+            <div class="navbar-header header-logo"><a href="/">ღHaibei&#39;s Blog</a></div>
+            <div class="menu navbar-right">
+                
+                    <a class="menu-item" href="/archives">Blog</a>
+                
+                    <a class="menu-item" href="/category">Categories</a>
+                
+                    <a class="menu-item" href="/tag">Tags</a>
+                
+                    <a class="menu-item" href="/about">About</a>
+                
+                    <a class="menu-item" href="/resume">Resume</a>
+                
+                <input id="switch_default" type="checkbox" class="switch_default">
+                <label for="switch_default" class="toggleBtn"></label>
+            </div>
+
+        </div>
+    </nav>
+
+    
+    <nav class="navbar-mobile" id="nav-mobile">
+        <div class="container">
+            <div class="navbar-header">
+                <div>
+                    <a href="/">ღHaibei&#39;s Blog</a><a id="mobile-toggle-theme">·&nbsp;Light</a>
+                </div>
+                <div class="menu-toggle" onclick="mobileBtn()">&#9776; Menu</div>
+            </div>
+            <div class="menu" id="mobile-menu">
+                
+                    <a class="menu-item" href="/archives">Blog</a>
+                
+                    <a class="menu-item" href="/category">Categories</a>
+                
+                    <a class="menu-item" href="/tag">Tags</a>
+                
+                    <a class="menu-item" href="/about">About</a>
+                
+                    <a class="menu-item" href="/resume">Resume</a>
+                
+            </div>
+        </div>
+    </nav>
+
+</header>
+<script>
+    var mobileBtn = function f() {
+        var toggleMenu = document.getElementsByClassName("menu-toggle")[0];
+        var mobileMenu = document.getElementById("mobile-menu");
+        if(toggleMenu.classList.contains("active")){
+           toggleMenu.classList.remove("active")
+            mobileMenu.classList.remove("active")
+        }else{
+            toggleMenu.classList.add("active")
+            mobileMenu.classList.add("active")
+        }
+    }
+</script>
+        <div class="main">
+            <div class="container">
+    
+    
+        <div class="post-toc">
+    <div class="tocbot-list">
+    </div>
+    <div class="tocbot-list-menu">
+        <a class="tocbot-toc-expand" onclick="expand_toc()">Expand all</a>
+        <a onclick="go_top()">Back to top</a>
+        <a onclick="go_bottom()">Go to bottom</a>
+    </div>
+</div>
+
+<script>
+    document.ready(
+        function () {
+            tocbot.init({
+                tocSelector: '.tocbot-list',
+                contentSelector: '.post-content',
+                headingSelector: 'h1, h2, h3, h4, h5',
+                collapseDepth: 1,
+                orderedList: false,
+                scrollSmooth: true,
+            })
+        }
+    )
+
+    function expand_toc() {
+        var b = document.querySelector(".tocbot-toc-expand");
+        tocbot.init({
+            tocSelector: '.tocbot-list',
+            contentSelector: '.post-content',
+            headingSelector: 'h1, h2, h3, h4, h5',
+            collapseDepth: 6,
+            orderedList: false,
+            scrollSmooth: true,
+        });
+        b.setAttribute("onclick", "collapse_toc()");
+        b.innerHTML = "Collapse all"
+    }
+
+    function collapse_toc() {
+        var b = document.querySelector(".tocbot-toc-expand");
+        tocbot.init({
+            tocSelector: '.tocbot-list',
+            contentSelector: '.post-content',
+            headingSelector: 'h1, h2, h3, h4, h5',
+            collapseDepth: 1,
+            orderedList: false,
+            scrollSmooth: true,
+        });
+        b.setAttribute("onclick", "expand_toc()");
+        b.innerHTML = "Expand all"
+    }
+
+    function go_top() {
+        window.scrollTo(0, 0);
+    }
+
+    function go_bottom() {
+        window.scrollTo(0, document.body.scrollHeight);
+    }
+
+</script>
+    
+
+    
+    <article class="post-wrap">
+        <header class="post-header">
+            <h1 class="post-title">利用Python进行数据可视化（1）</h1>
+            
+                <div class="post-meta">
+                    
+                        Author: <a itemprop="author" rel="author" href="/">Haibei</a>
+                    
+
+                    
+                        <span class="post-time">
+                        Date: <a href="#">December 27, 2018&nbsp;&nbsp;17:38:07</a>
+                        </span>
+                    
+                    
+                </div>
+            
+        </header>
+
+        <div class="post-content">
+            <p>​    如果想要用Python进行数据分析，就需要在项目初期开始进行探索性的数据分析，这样对数据有一定的了解。其中最直观的就是采用数据可视化技术，这样，数据不仅一目了然，而且更容易被解读。同样在数据分析得到结果之后，我们还需要用到可视化技术，把最终的结果呈现出来。</p>
+<h2 id="可视化视图都有哪些？"><a href="#可视化视图都有哪些？" class="headerlink" title="可视化视图都有哪些？"></a>可视化视图都有哪些？</h2><p>按照数据之间的关系，我们可以把可视化视图划分为4类，它们分别是比较、联系、构成和分布。我来简单介绍下这四种关系的特点：</p>
+<p><strong>比较</strong>：比较数据间各类别的关系，或者是它们随着时间的变化趋势，比如折线图；</p>
+<p><strong>联系：</strong>查看两个或两个以上变量之间的关系，比如散点图；</p>
+<p><strong>构成：</strong>每个部分占整体的百分比，或者是随着时间的百分比变化，比如饼图；</p>
+<p><strong>分布</strong>：关注单个变量，或者多个变量的分布情况，比如直方图。</p>
+<p>同样，按照变量的个数，我们可以把可视化视图划分为单变量分析和多变量分析。</p>
+<p>单变量分析指的是一次只关注一个变量。比如我们只关注“身高”这个变量，来看身高的取值分布，而暂时忽略其他变量。</p>
+<p>多变量分析可以让你在一张图上可以查看两个以上变量的关系。比如“身高”和“年龄”，你可以理解是同一个人的两个参数，这样在同一张图中可以看到每个人的“身高”和“年龄”的取值，从而分析出来这两个变量之间是否存在某种联系。</p>
+<p>可视化的视图可以说是分门别类，多种多样，今天我主要介绍常用的10种视图，这些视图包括了散点图、折线图、直方图、条形图、箱线图、饼图、热力图、蜘蛛图、二元变量分布和成对关系。</p>
+<p><strong>散点图</strong></p>
+<p>散点图的英文叫做scatter plot，它将两个变量的值显示在二维坐标中，非常适合展示两个变量之间的关系。当然，除了二维的散点图，我们还有三维的散点图。</p>
+<p>我在上一讲中给你简单介绍了下Matplotlib这个工具，在Matplotlib中，我们经常会用到pyplot这个工具包，它包括了很多绘图函数，类似Matlab的绘图框架。在使用前你需要进行引用：</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">import matplotlib.pyplot as plt</span><br></pre></td></tr></table></figure>
+
+<p>在工具包引用后，画散点图，需要使用plt.scatter(x, y, marker=None)函数。x、y 是坐标，marker代表了标记的符号。比如“x”、“&gt;”或者“o”。选择不同的marker，呈现出来的符号样式也会不同。</p>
+<p>除了Matplotlib外，你也可以使用Seaborn进行散点图的绘制。在使用Seaborn前，也需要进行包引用：</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">import seaborn as sns</span><br></pre></td></tr></table></figure>
+
+<p>在引用seaborn工具包之后，就可以使用seaborn工具包的函数了。如果想要做散点图，可以直接使用sns.jointplot(x, y, data=None, kind=‘scatter’)函数。其中x、y是data中的下标。data就是我们要传入的数据，一般是DataFrame类型。kind这类我们取scatter，代表散点的意思。当然kind还可以取其他值，这个我在后面的视图中会讲到，不同的kind代表不同的视图绘制方式。</p>
+<p>接下来，让我们来模拟下，假设我们的数据是随机的1000个点。</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br></pre></td><td class="code"><pre><span class="line">N = 1000</span><br><span class="line">x= np.random.randn(N)</span><br><span class="line">y = np.random.randn(N)</span><br><span class="line">plt.scatter(x,y,marker=&apos;x&apos;)</span><br><span class="line">plt.show()</span><br><span class="line">df = pd.DataFrame(&#123;&quot;x&quot;:x,&quot;y&quot;:y&#125;)</span><br><span class="line">sns.jointplot(x=&quot;x&quot;,y=&quot;y&quot;,data=df,kind=&quot;scatter&quot;)</span><br><span class="line">plt.show()</span><br></pre></td></tr></table></figure>
+
+<p>运行一下上面的代码，就可以看到下面的视图（第一张图为Matplotlib绘制的，第二张图为Seaborn绘制的）。可以看到Matplotlib和Seaborn的视图呈现还是有差别的。Matplotlib默认情况下呈现出来的是个长方形。而Seaborn呈现的是个正方形，而且不仅显示出了散点图，还给了这两个变量的分布情况。</p>
+<p><img src="https://alvinqy.github.io/2018/12/27/plot1/1564400497041.png" alt="Matplotlib绘制"></p>
+<p><img src="https://alvinqy.github.io/2018/12/27/plot1/1564400583685.png" alt="Seaborn绘制"></p>
+<p><strong>折线图</strong></p>
+<p>折线图可以用来表示数据随着时间变化的趋势。</p>
+<p>在Matplotlib中，我们可以直接使用plt.plot()函数，当然需要提前把数据按照x轴的大小进行排序，要不画出来的折线图就无法按照x轴递增的顺序展示。</p>
+<p>在Seaborn中，我们使用sns.lineplot (x, y, data=None)函数。其中x、y是data中的下标。data就是我们要传入的数据，一般是DataFrame类型。</p>
+<p>这里我们设置了x、y的数组。x数组代表时间（年），y数组我们随便设置几个取值。下面是详细的代码。</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br></pre></td><td class="code"><pre><span class="line">x = [2010,2011,2012,2013,2014,2015,2016,2017,2018,2019]</span><br><span class="line">y = [5,3,6,20,17,16,19,30,32,35]</span><br><span class="line">plt.plot(x,y)</span><br><span class="line">plt.show()</span><br><span class="line">df = pd.DataFrame(&#123;&quot;x&quot;:x,&quot;y&quot;:y&#125;)</span><br><span class="line">sns.lineplot(x=x,y=y,data=df)</span><br><span class="line">plt.show()</span><br></pre></td></tr></table></figure>
+
+<p>然后我们分别用Matplotlib和Seaborn进行画图，可以得到下面的图示。你可以看出这两个图示的结果是完全一样的，只是在seaborn中标记了x和y轴的含义。</p>
+<p><img src="https://alvinqy.github.io/2018/12/27/plot1/1564400800076.png" alt="Matplotlib绘制"></p>
+<p><img src="https://alvinqy.github.io/2018/12/27/plot1/1564400832162.png" alt="Seaborn绘制"></p>
+<p><strong>直方图</strong></p>
+<p>直方图是比较常见的视图，它是把横坐标等分成了一定数量的小区间，这个小区间也叫作“箱子”，然后在每个“箱子”内用矩形条（bars）展示该箱子的箱子数（也就是y值），这样就完成了对数据集的直方图分布的可视化。</p>
+<p>在Matplotlib中，我们使用plt.hist(x, bins=10)函数，其中参数x是一维数组，bins代表直方图中的箱子数量，默认是10。</p>
+<p>在Seaborn中，我们使用sns.distplot(x, bins=10, kde=True)函数。其中参数x是一维数组，bins代表直方图中的箱子数量，kde代表显示核密度估计，默认是True，我们也可以把kde设置为False，不进行显示。核密度估计是通过核函数帮我们来估计概率密度的方法。</p>
+<p>以下一段绘制直方图的代码。</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br></pre></td><td class="code"><pre><span class="line">a = np.random.randn(100)</span><br><span class="line">s = pd.Series(a)</span><br><span class="line">print(a)</span><br><span class="line">print(s)</span><br><span class="line">plt.hist(s)</span><br><span class="line">plt.show()</span><br><span class="line">sns.distplot(s,kde=False)</span><br><span class="line">plt.show()</span><br><span class="line">sns.distplot(s,kde=True)</span><br><span class="line">plt.show()</span><br></pre></td></tr></table></figure>
+
+<p>我们创建一个随机的一维数组，然后分别用Matplotlib和Seaborn进行直方图的显示，结果如下，你可以看出，没有任何差别，其中最后一张图就是kde默认为Ture时的显示情况。</p>
+<p><img src="https://alvinqy.github.io/2018/12/27/plot1/1564401022228.png" alt="1564401022228"></p>
+<p><img src="https://alvinqy.github.io/2018/12/27/plot1/1564401107570.png" alt="1564401107570"></p>
+<p><img src="https://alvinqy.github.io/2018/12/27/plot1/1564401145816.png" alt="1564401145816"></p>
+
+        </div>
+
+        
+            <section class="post-copyright">
+                
+                    <p class="copyright-item">
+                        <span>Author:</span>
+                        <span>Haibei</span>
+                    </p>
+                
+                
+                    <p class="copyright-item">
+                        <span>Permalink:</span>
+                        <span><a href="http://yoursite.com/2018/12/27/利用Python进行数据可视化（1）/">http://yoursite.com/2018/12/27/利用Python进行数据可视化（1）/</a></span>
+                    </p>
+                
+                
+                    <p class="copyright-item">
+                        <span>License:</span>
+                        <span></span>
+                    </p>
+                
+                
+                     <p class="copyright-item">
+                         <span>Slogan:</span>
+                         <span>Do you believe in <strong>DESTINY<strong>?</strong></strong></span>
+                     </p>
+                
+
+            </section>
+        
+        <section class="post-tags">
+            <div>
+                <span>Tag(s):</span>
+                <span class="tag">
+                    
+                </span>
+            </div>
+            <div>
+                <a href="javascript:window.history.back();">back</a>
+                <span>· </span>
+                <a href="/">home</a>
+            </div>
+        </section>
+        <section class="post-nav">
+            
+                <a class="prev" rel="prev" href="/2019/01/02/利用Python进行数据可视化（2）/">利用Python进行数据可视化（2）</a>
+            
+            
+            <a class="next" rel="next" href="/2018/11/15/线性回归的正则化/">线性回归的正则化</a>
+            
+        </section>
+
+
+    </article>
+</div>
+
+        </div>
+        <footer id="footer" class="footer">
+    <div class="copyright">
+        <span>© 2014-1019 Hai۰Bei | 友情链接：   <a href="https://zxyyee.cn" target="_blank">张兴亚</a></span>
+    </div>
+</footer>
+    </div>
+</body>
+</html>

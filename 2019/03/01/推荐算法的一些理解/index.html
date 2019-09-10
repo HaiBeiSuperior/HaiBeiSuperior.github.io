@@ -1,0 +1,332 @@
+<!DOCTYPE html>
+<html lang="en">
+<head><meta name="generator" content="Hexo 3.9.0">
+    <meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, user-scalable=no, initial-scale=1.0, maximum-scale=1.0, minimum-scale=1.0">
+<meta http-equiv="X-UA-Compatible" content="ie=edge">
+
+
+
+<title>推荐算法的一些理解 | 海北的个人博客</title>
+
+
+
+    <link rel="icon" href="/favicon.ico">
+
+
+
+
+    <!-- stylesheets list from _config.yml -->
+    
+    <link rel="stylesheet" href="/css/style.css">
+    
+
+
+
+    <!-- scripts list from _config.yml -->
+    
+    <script src="/js/script.js"></script>
+    
+    <script src="/js/tocbot.min.js"></script>
+    
+
+
+
+    
+    
+        
+    
+
+
+</head>
+<body>
+    <div class="wrapper">
+        <header>
+    <nav class="navbar">
+        <div class="container">
+            <div class="navbar-header header-logo"><a href="/">ღHaibei&#39;s Blog</a></div>
+            <div class="menu navbar-right">
+                
+                    <a class="menu-item" href="/archives">Blog</a>
+                
+                    <a class="menu-item" href="/category">Categories</a>
+                
+                    <a class="menu-item" href="/tag">Tags</a>
+                
+                    <a class="menu-item" href="/about">About</a>
+                
+                    <a class="menu-item" href="/resume">Resume</a>
+                
+                <input id="switch_default" type="checkbox" class="switch_default">
+                <label for="switch_default" class="toggleBtn"></label>
+            </div>
+
+        </div>
+    </nav>
+
+    
+    <nav class="navbar-mobile" id="nav-mobile">
+        <div class="container">
+            <div class="navbar-header">
+                <div>
+                    <a href="/">ღHaibei&#39;s Blog</a><a id="mobile-toggle-theme">·&nbsp;Light</a>
+                </div>
+                <div class="menu-toggle" onclick="mobileBtn()">&#9776; Menu</div>
+            </div>
+            <div class="menu" id="mobile-menu">
+                
+                    <a class="menu-item" href="/archives">Blog</a>
+                
+                    <a class="menu-item" href="/category">Categories</a>
+                
+                    <a class="menu-item" href="/tag">Tags</a>
+                
+                    <a class="menu-item" href="/about">About</a>
+                
+                    <a class="menu-item" href="/resume">Resume</a>
+                
+            </div>
+        </div>
+    </nav>
+
+</header>
+<script>
+    var mobileBtn = function f() {
+        var toggleMenu = document.getElementsByClassName("menu-toggle")[0];
+        var mobileMenu = document.getElementById("mobile-menu");
+        if(toggleMenu.classList.contains("active")){
+           toggleMenu.classList.remove("active")
+            mobileMenu.classList.remove("active")
+        }else{
+            toggleMenu.classList.add("active")
+            mobileMenu.classList.add("active")
+        }
+    }
+</script>
+        <div class="main">
+            <div class="container">
+    
+    
+        <div class="post-toc">
+    <div class="tocbot-list">
+    </div>
+    <div class="tocbot-list-menu">
+        <a class="tocbot-toc-expand" onclick="expand_toc()">Expand all</a>
+        <a onclick="go_top()">Back to top</a>
+        <a onclick="go_bottom()">Go to bottom</a>
+    </div>
+</div>
+
+<script>
+    document.ready(
+        function () {
+            tocbot.init({
+                tocSelector: '.tocbot-list',
+                contentSelector: '.post-content',
+                headingSelector: 'h1, h2, h3, h4, h5',
+                collapseDepth: 1,
+                orderedList: false,
+                scrollSmooth: true,
+            })
+        }
+    )
+
+    function expand_toc() {
+        var b = document.querySelector(".tocbot-toc-expand");
+        tocbot.init({
+            tocSelector: '.tocbot-list',
+            contentSelector: '.post-content',
+            headingSelector: 'h1, h2, h3, h4, h5',
+            collapseDepth: 6,
+            orderedList: false,
+            scrollSmooth: true,
+        });
+        b.setAttribute("onclick", "collapse_toc()");
+        b.innerHTML = "Collapse all"
+    }
+
+    function collapse_toc() {
+        var b = document.querySelector(".tocbot-toc-expand");
+        tocbot.init({
+            tocSelector: '.tocbot-list',
+            contentSelector: '.post-content',
+            headingSelector: 'h1, h2, h3, h4, h5',
+            collapseDepth: 1,
+            orderedList: false,
+            scrollSmooth: true,
+        });
+        b.setAttribute("onclick", "expand_toc()");
+        b.innerHTML = "Expand all"
+    }
+
+    function go_top() {
+        window.scrollTo(0, 0);
+    }
+
+    function go_bottom() {
+        window.scrollTo(0, document.body.scrollHeight);
+    }
+
+</script>
+    
+
+    
+    <article class="post-wrap">
+        <header class="post-header">
+            <h1 class="post-title">推荐算法的一些理解</h1>
+            
+                <div class="post-meta">
+                    
+                        Author: <a itemprop="author" rel="author" href="/">Haibei</a>
+                    
+
+                    
+                        <span class="post-time">
+                        Date: <a href="#">March 1, 2019&nbsp;&nbsp;8:42:25</a>
+                        </span>
+                    
+                    
+                </div>
+            
+        </header>
+
+        <div class="post-content">
+            <p>看到这篇文章，关于推荐算法阐述得比较清楚，现转载如下：</p>
+<p><a href="https://blog.csdn.net/v_JULY_v/article/details/7184318" target="_blank" rel="noopener">https://blog.csdn.net/v_JULY_v/article/details/7184318</a></p>
+<h1 id="1、推荐引擎原理"><a href="#1、推荐引擎原理" class="headerlink" title="1、推荐引擎原理"></a>1、推荐引擎原理</h1><p>推荐引擎尽最大努力的收集尽可能多的用户信息及行为，所谓广撒网，勤捕鱼，然后“特别的爱给特别的你”，最后基于相似性的基础之上持续“给力”，原理如下图所示（图引自本文的参考资料之一：探索推荐引擎内部的秘密）：</p>
+<blockquote>
+<p><img src="https://alvinqy.github.io/2019/03/01/recommend2/1564747993825.png" alt="1564747993825"></p>
+</blockquote>
+<h1 id="2、推荐引擎的分类"><a href="#2、推荐引擎的分类" class="headerlink" title="2、推荐引擎的分类"></a>2、推荐引擎的分类</h1><p>2、推荐引擎的分类<br>推荐引擎根据不同依据如下分类：</p>
+<ol>
+<li>根据其是不是为不同的用户推荐不同的数据，分为基于大众行为（网站管理员自行推荐，或者基于系统所有用户的反馈统计计算出的当下比较流行的物品）、及个性化推荐引擎（帮你找志同道合，趣味相投的朋友，然后在此基础上实行推荐）；</li>
+<li>根据其数据源，分为基于人口统计学的（用户年龄或性别相同判定为相似用户）、基于内容的（物品具有相同关键词和Tag，没有考虑人为因素），以及基于协同过滤的推荐（发现物品，内容或用户的相关性推荐，分为三个子类，下文阐述）；</li>
+<li>根据其建立方式，分为基于物品和用户本身的（用户-物品二维矩阵描述用户喜好，聚类算法）、基于关联规则的（The Apriori algorithm算法是一种最有影响的挖掘布尔关联规则频繁项集的算法）、以及基于模型的推荐（机器学习，所谓机器学习，即让计算机像人脑一样持续学习，是人工智能领域的一个子领域）。</li>
+</ol>
+<p>关于上述第二个分类（2、根据其数据源）中的基于协同过滤的推荐：随着Web2.0的发展，Web站点更加提倡用户参与和用户贡献，因此基于协同过滤的推荐机制应运而生。它的原理很简单，就是根据用户对物品或者信息的偏好，发现物品或者内容本身的相关性，或者是发现用户的相关性，然后再基于这些关联性进行推荐。</p>
+<p>而基于协同过滤的推荐，又分三个子类：</p>
+<ol>
+<li>基于用户的推荐(通过共同口味与偏好找相似邻居用户，K-邻居算法，你朋友喜欢，你也可能喜欢)，</li>
+<li>基于项目的推荐(发现物品之间的相似度，推荐类似的物品，你喜欢物品A，C与A相似，可能也喜欢C)，</li>
+<li>基于模型的推荐(基于样本的用户喜好信息构造一个推荐模型，然后根据实时的用户喜好信息预测推荐)。</li>
+</ol>
+<p>我们看到，此协同过滤算法最大限度的利用用户之间，或物品之间的相似相关性，而后基于这些信息的基础上实行推荐。下文还会具体介绍此协同过滤。</p>
+<p>不过一般实践中，我们通常还是把推荐引擎分两类：</p>
+<ul>
+<li>第一类称为协同过滤，即基于相似用户的协同过滤推荐（用户与系统或互联网交互留下的一切信息、蛛丝马迹，或用户与用户之间千丝万缕的联系），以及基于相似项目的协同过滤推荐（尽最大可能发现物品间的相似度）；</li>
+<li>第二类便是基于内容分析的推荐（调查问卷，电子邮件，或者推荐引擎对本blog内容的分析）</li>
+</ul>
+<h1 id="3、新浪微博推荐机制"><a href="#3、新浪微博推荐机制" class="headerlink" title="3、新浪微博推荐机制"></a>3、新浪微博推荐机制</h1><p>在新浪微博推荐好友的机制中：1、我与A非好友，但我的好友中有不少人与A是好友，即我和A有不少共同的好友，那么系统便会把A也推荐给我（新浪称之为共同好友）；2、我关注的人中有不少人关注了B，那么系统推测我也可能会喜欢B，从而亦会把B也推荐给我（新浪称之为间接关注人）。</p>
+<p>但新浪实际操作起来，这两种方式会搅在一起，如我关注的人中，有不少人关注了B，但事实上这关注B的不少人中有些也是我的好友。以上推荐方式，统称为基于相似用户的协同过滤推荐（无非就是找到：用户与用户之间千丝万缕的联系，或是从你的好友入手，或是从你关注的人入手）。</p>
+<p>当然，还有一类比如人气用户推荐，便是上文所述的基于大众行为的推荐，即人云亦云、跟风。系统推测大家都喜欢的，可能你也会喜欢。如大家都知道姚晨新浪微博粉丝数量排第一，则争相关注，最终粉丝量越推越高。两种推荐方式如下图所示：</p>
+<blockquote>
+<blockquote>
+<blockquote>
+</blockquote>
+<p><img src="https://alvinqy.github.io/2019/03/01/recommend2/1564748049609.png" alt="1564748049609"></p>
+</blockquote>
+</blockquote>
+<p>不过，上述不论是基于用户的推荐方式，还是基于大众行为的推荐都并没有真正寻找到用户与用户之间共同的兴趣，偏好和口味，因为很多的时候，朋友的朋友不一定能成为你自己的朋友，且有的人清高于世，你们都追求的，我偏不屑。所以，从分析用户发表的微博的内容相关入手，找到各自共同的关注点、兴趣点才是王道。当然新浪微博最近让用户选择给自己发表的微博内容打上标签，以利于日后寻找微博内容中相关用户共同的标签tag，关键词，此种推荐方式正是基于微博内容分析的推荐。如下图：</p>
+<blockquote>
+<p><img src="https://alvinqy.github.io/2019/03/01/recommend2/1564748083204.png" alt="1564748083204"></p>
+</blockquote>
+<p>只是问题是，谁会不遗余力发完微博后，还去给它添加什么标签呢？所以，新浪微博还得努力，寻找另一种更好地分析微博内容的方式。不然系统全盘扫描海里用户的海量微博内容，则恐怕吃不消也负担不起。<br>然个人觉得倒是可以从微博关键词（标签tag云）和每个用户为自己打的标签（打着越多的共同标签可定义为相似用户）入手，如下图左右部分所示：</p>
+<blockquote>
+<p><img src="https://alvinqy.github.io/2019/03/01/recommend2/1564748110062.png" alt="1564748110062"></p>
+</blockquote>
+<p>也就是说，通过共同的好友和通过间接关注的人来定义相似用户是不靠谱的，只有通过基于微博内容的分析寻找相似用户才是可行之道，同时，更进一步，通过微博内容分析得到标签tag云后，再从中找到相同或相近的标签tag云寻找相似的用户无疑比已有推荐好友方式（通过共同的好友和通过间接关注的人来定义相似用户）更靠谱。</p>
+<p>3.1、多种推荐方式结合</p>
+<p>在现行的 Web 站点上的推荐往往都不是单纯只采用了某一种推荐的机制和策略，他们往往是将多个方法混合在一起，从而达到更好的推荐效果。</p>
+<p>举个例子如Amazon中除此基于用户的推荐之外，还会用到基于内容的推荐(物品具有相同关键词和Tag)：如新产品的推荐；基于项目的协同过滤推荐(喜欢A，C与A类似，可能也喜欢C)：如捆绑销售and别人购买/浏览的商品。</p>
+<p>总之，多种推荐方式结合，加权（用线性公式（linear formula）将几种不同的推荐按照一定权重组合起来，具体权重的值需要在测试数据集上反复实验，从而达到最好的推荐效果。）、切换、分区、分层等混合。但不论是哪种推荐方式，一般也就涵盖在上文所述的推荐方式中。</p>
+<h1 id="4、协同过滤推荐"><a href="#4、协同过滤推荐" class="headerlink" title="4、协同过滤推荐"></a>4、协同过滤推荐</h1><p>协同过滤是利用集体智慧的一个典型方法。要理解什么是协同过滤 (Collaborative Filtering, 简称 CF)，首先想一个简单的问题，如果你现在想看个电影，但你不知道具体看哪部，你会怎么做？大部分的人会问问周围的朋友或者称之为广义上的邻居(neighborhood)，看看最近有什么好看的电影推荐，而我们一般更倾向于从口味比较类似的朋友那里得到推荐。这就是协同过滤的核心思想。如下图，你能从图中看到多少信息？</p>
+<p><img src="https://alvinqy.github.io/2019/03/01/recommend2/1564748135637.png" alt="1564748135637"></p>
+<p>做协同过滤推荐，一般要做好以下几个步骤：</p>
+<p>1）若要做协同过滤，那么收集用户偏好则成了关键。可以通过用户的行为诸如评分（如不同的用户对不同的作品有不同的评分，而评分接近则意味着喜好口味相近，便可判定为相似用户），投票，转发，保存，书签，标记，评论，点击流，页面停留时间，是否购买等获得。如下面第2点所述：所有这些信息都可以数字化，如一个二维矩阵表示出来。</p>
+<p>2）收集了用户行为数据之后，我们接下来便要对数据进行减噪与归一化操作(得到一个用户偏好的二维矩阵，一维是用户列表，另一维是物品列表，值是用户对物品的偏好，一般是 [0,1] 或者 [-1, 1] 的浮点数值)。下面再简单介绍下减噪和归一化操作：</p>
+<ul>
+<li>所谓减噪：用户行为数据是用户在使用应用过程中产生的，它可能存在大量的噪音和用户的误操作，我们可以通过经典的数据挖掘算法过滤掉行为数据中的噪音，这样可以是我们的分析更加精确（类似于网页的去噪处理）。</li>
+<li>所谓归一化：将各个行为的数据统一在一个相同的取值范围中，从而使得加权求和得到的总体喜好更加精确。最简单的归一化处理，便是将各类数据除以此类中的最大值，以保证归一化后的数据取值在 [0,1] 范围中。至于所谓的加权，很好理解，因为每个人占的权值不同，类似于一场唱歌比赛中对某几个选手进行投票决定其是否晋级，观众的投票抵1分，专家评委的投票抵5分，最后得分最多的选手直接晋级。</li>
+</ul>
+<p>3）找到相似的用户和物品，通过什么途径找到呢？便是计算相似用户或相似物品的相似度。</p>
+<p>4）相似度的计算有多种方法，不过都是基于向量Vector的，其实也就是计算两个向量的距离，距离越近相似度越大。在推荐中，用户-物品偏好的二维矩阵下，我们将某个或某几个用户对莫两个物品的偏好作为一个向量来计算两个物品之间的相似度，或者将两个用户对某个或某几个物品的偏好作为一个向量来计算两个用户之间的相似度。</p>
+<p>相似度计算算法可以用于计算用户或者项目相似度。以项目相似度计算（Item Similarity Computation）为列，通性在于都是从评分矩阵中，为两个项目i，j挑选出共同的评分用户，然对这个共同用户的评分向量，进行计算相似度si,j，如下图所示，行代表用户，列代表项目(注意到是从i，j向量中抽出共有的评论，组成的一对向量，进行相似度计算)：</p>
+<blockquote>
+<p><img src="https://alvinqy.github.io/2019/03/01/recommend2/1564748166838.png" alt="1564748166838"></p>
+</blockquote>
+<p>所以说，很简单，找物品间的相似度，用户不变，找多个用户对物品的评分；找用户间的相似度，物品不变，找用户对某些个物品的评分。</p>
+<p>5）而计算出来的这两个相似度则将作为基于用户、项目的两项协同过滤的推荐。</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">常见的计算相似度的方法有：欧几里德距离，皮尔逊相关系数（如两个用户对多个电影的评分，采取皮尔逊相关系数等相关计算方法，可以抉择出他们的口味和偏好是否一致），Cosine相似度，Tanimoto系数。下面，简单介绍其中的欧几里得距离与皮尔逊相关系数：</span><br><span class="line"></span><br><span class="line">欧几里德距离（Euclidean Distance）是最初用于计算欧几里德空间中两个点的距离，假设 x，y 是 n 维空间的两个点，它们之间的欧几里德距离是：</span><br></pre></td></tr></table></figure>
+
+<blockquote>
+<blockquote>
+</blockquote>
+<p><img src="https://alvinqy.github.io/2019/03/01/recommend2/1564748187475.png" alt="1564748187475"></p>
+</blockquote>
+
+        </div>
+
+        
+            <section class="post-copyright">
+                
+                    <p class="copyright-item">
+                        <span>Author:</span>
+                        <span>Haibei</span>
+                    </p>
+                
+                
+                    <p class="copyright-item">
+                        <span>Permalink:</span>
+                        <span><a href="http://yoursite.com/2019/03/01/推荐算法的一些理解/">http://yoursite.com/2019/03/01/推荐算法的一些理解/</a></span>
+                    </p>
+                
+                
+                    <p class="copyright-item">
+                        <span>License:</span>
+                        <span></span>
+                    </p>
+                
+                
+                     <p class="copyright-item">
+                         <span>Slogan:</span>
+                         <span>Do you believe in <strong>DESTINY<strong>?</strong></strong></span>
+                     </p>
+                
+
+            </section>
+        
+        <section class="post-tags">
+            <div>
+                <span>Tag(s):</span>
+                <span class="tag">
+                    
+                </span>
+            </div>
+            <div>
+                <a href="javascript:window.history.back();">back</a>
+                <span>· </span>
+                <a href="/">home</a>
+            </div>
+        </section>
+        <section class="post-nav">
+            
+                <a class="prev" rel="prev" href="/2019/05/12/利用Docker来搭建分布式文件系统FastDfs/">利用Docker来搭建分布式文件系统FastDfs</a>
+            
+            
+            <a class="next" rel="next" href="/2019/02/01/基于python3-7利用Motor来异步读写Mongodb提高效率/">基于python3.7利用Motor来异步读写Mongodb提高效率</a>
+            
+        </section>
+
+
+    </article>
+</div>
+
+        </div>
+        <footer id="footer" class="footer">
+    <div class="copyright">
+        <span>© 2014-1019 Hai۰Bei | 友情链接：   <a href="https://zxyyee.cn" target="_blank">张兴亚</a></span>
+    </div>
+</footer>
+    </div>
+</body>
+</html>

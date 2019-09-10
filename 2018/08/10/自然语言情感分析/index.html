@@ -1,0 +1,273 @@
+<!DOCTYPE html>
+<html lang="en">
+<head><meta name="generator" content="Hexo 3.9.0">
+    <meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, user-scalable=no, initial-scale=1.0, maximum-scale=1.0, minimum-scale=1.0">
+<meta http-equiv="X-UA-Compatible" content="ie=edge">
+
+
+
+<title>自然语言情感分析 | 海北的个人博客</title>
+
+
+
+    <link rel="icon" href="/favicon.ico">
+
+
+
+
+    <!-- stylesheets list from _config.yml -->
+    
+    <link rel="stylesheet" href="/css/style.css">
+    
+
+
+
+    <!-- scripts list from _config.yml -->
+    
+    <script src="/js/script.js"></script>
+    
+    <script src="/js/tocbot.min.js"></script>
+    
+
+
+
+    
+    
+        
+    
+
+
+</head>
+<body>
+    <div class="wrapper">
+        <header>
+    <nav class="navbar">
+        <div class="container">
+            <div class="navbar-header header-logo"><a href="/">ღHaibei&#39;s Blog</a></div>
+            <div class="menu navbar-right">
+                
+                    <a class="menu-item" href="/archives">Blog</a>
+                
+                    <a class="menu-item" href="/category">Categories</a>
+                
+                    <a class="menu-item" href="/tag">Tags</a>
+                
+                    <a class="menu-item" href="/about">About</a>
+                
+                    <a class="menu-item" href="/resume">Resume</a>
+                
+                <input id="switch_default" type="checkbox" class="switch_default">
+                <label for="switch_default" class="toggleBtn"></label>
+            </div>
+
+        </div>
+    </nav>
+
+    
+    <nav class="navbar-mobile" id="nav-mobile">
+        <div class="container">
+            <div class="navbar-header">
+                <div>
+                    <a href="/">ღHaibei&#39;s Blog</a><a id="mobile-toggle-theme">·&nbsp;Light</a>
+                </div>
+                <div class="menu-toggle" onclick="mobileBtn()">&#9776; Menu</div>
+            </div>
+            <div class="menu" id="mobile-menu">
+                
+                    <a class="menu-item" href="/archives">Blog</a>
+                
+                    <a class="menu-item" href="/category">Categories</a>
+                
+                    <a class="menu-item" href="/tag">Tags</a>
+                
+                    <a class="menu-item" href="/about">About</a>
+                
+                    <a class="menu-item" href="/resume">Resume</a>
+                
+            </div>
+        </div>
+    </nav>
+
+</header>
+<script>
+    var mobileBtn = function f() {
+        var toggleMenu = document.getElementsByClassName("menu-toggle")[0];
+        var mobileMenu = document.getElementById("mobile-menu");
+        if(toggleMenu.classList.contains("active")){
+           toggleMenu.classList.remove("active")
+            mobileMenu.classList.remove("active")
+        }else{
+            toggleMenu.classList.add("active")
+            mobileMenu.classList.add("active")
+        }
+    }
+</script>
+        <div class="main">
+            <div class="container">
+    
+    
+        <div class="post-toc">
+    <div class="tocbot-list">
+    </div>
+    <div class="tocbot-list-menu">
+        <a class="tocbot-toc-expand" onclick="expand_toc()">Expand all</a>
+        <a onclick="go_top()">Back to top</a>
+        <a onclick="go_bottom()">Go to bottom</a>
+    </div>
+</div>
+
+<script>
+    document.ready(
+        function () {
+            tocbot.init({
+                tocSelector: '.tocbot-list',
+                contentSelector: '.post-content',
+                headingSelector: 'h1, h2, h3, h4, h5',
+                collapseDepth: 1,
+                orderedList: false,
+                scrollSmooth: true,
+            })
+        }
+    )
+
+    function expand_toc() {
+        var b = document.querySelector(".tocbot-toc-expand");
+        tocbot.init({
+            tocSelector: '.tocbot-list',
+            contentSelector: '.post-content',
+            headingSelector: 'h1, h2, h3, h4, h5',
+            collapseDepth: 6,
+            orderedList: false,
+            scrollSmooth: true,
+        });
+        b.setAttribute("onclick", "collapse_toc()");
+        b.innerHTML = "Collapse all"
+    }
+
+    function collapse_toc() {
+        var b = document.querySelector(".tocbot-toc-expand");
+        tocbot.init({
+            tocSelector: '.tocbot-list',
+            contentSelector: '.post-content',
+            headingSelector: 'h1, h2, h3, h4, h5',
+            collapseDepth: 1,
+            orderedList: false,
+            scrollSmooth: true,
+        });
+        b.setAttribute("onclick", "expand_toc()");
+        b.innerHTML = "Expand all"
+    }
+
+    function go_top() {
+        window.scrollTo(0, 0);
+    }
+
+    function go_bottom() {
+        window.scrollTo(0, document.body.scrollHeight);
+    }
+
+</script>
+    
+
+    
+    <article class="post-wrap">
+        <header class="post-header">
+            <h1 class="post-title">自然语言情感分析</h1>
+            
+                <div class="post-meta">
+                    
+                        Author: <a itemprop="author" rel="author" href="/">Haibei</a>
+                    
+
+                    
+                        <span class="post-time">
+                        Date: <a href="#">August 10, 2018&nbsp;&nbsp;10:51:09</a>
+                        </span>
+                    
+                    
+                </div>
+            
+        </header>
+
+        <div class="post-content">
+            <h1 id="背景与挖掘目标"><a href="#背景与挖掘目标" class="headerlink" title="背景与挖掘目标"></a>背景与挖掘目标</h1><p>在这种电商平台激烈竟争的大背景下除了提高商品质量、压低商品价格之外，了解更多消费者的心声对于电商平台来说也变得越来越有必用，其中非常重要的方式就是对消费者的文本评论数据进行内在信息的数据挖掘分析。</p>
+<p>对某平台的热水器评沦进行文本挖掘分析本次数据挖掘建模目标如下：</p>
+<p>分析商品的用户情感倾向 从评沦文本中挖掘出该商品优点与不足 提炼不同商品的卖点</p>
+<h1 id="自然语言情感分析"><a href="#自然语言情感分析" class="headerlink" title="自然语言情感分析"></a>自然语言情感分析</h1><p>情感分析是一种常见的自然语言处理（NLP）方法的应用，特别是在以提取文本的情感内容为目标的分类方法中。通过这种方式，情感分析可以被视为利用一些情感得分指标来量化定性数据的方法。尽管情绪在很大程度上是主观的，但是情感量化分析已经有很多有用的实践，比如企业分析消费者对产品的反馈信息，或者检测在线评论中的差评信息。</p>
+<p>最简单的情感分析方法是利用词语的正负属性来判定。句子中的每个单词都有一个得分，乐观的单词得分为 +1，悲观的单词则为 -1。然后我们对句子中所有单词得分进行加总求和得到一个最终的情感总分。很明显，这种方法有许多局限之处，最重要的一点在于它忽略了上下文的信息。例如，在这个简易模型中，因为“not”的得分为 -1，而“good”的得分为 +1，所以词组“not good”将被归类到中性词组中。尽管词组“not good”中包含单词“good”，但是人们仍倾向于将其归类到悲观词组中。</p>
+<p>另外一个常见的方法是将文本视为一个“词袋”。我们将每个文本看出一个1xN的向量，其中N表示文本词汇的数量。该向量中每一列都是一个单词，其对应的值为该单词出现的频数。例如，词组“bag of bag of words”可以被编码为 [2, 2, 1]。这些数据可以被应用到机器学习分类算法中（比如罗吉斯回归或者支持向量机），从而预测未知数据的情感状况。需要注意的是，这种有监督学习的方法要求利用已知情感状况的数据作为训练集。虽然这个方法改进了之前的模型，但是它仍然忽略了上下文的信息和数据集的规模情况。</p>
+<p>谷歌开发了一个叫做 Word2Vec 的方法，该方法可以在捕捉语境信息的同时压缩数据规模。Word2Vec实际上是两种不同的方法：Continuous Bag of Words (CBOW) 和 Skip-gram。CBOW的目标是根据上下文来预测当前词语的概率。Skip-gram刚好相反：根据当前词语来预测上下文的概率（如图 1 所示）。这两种方法都利用人工神经网络作为它们的分类算法。起初，每个单词都是一个随机 N 维向量。经过训练之后，该算法利用 CBOW 或者 Skip-gram 的方法获得了每个单词的最优向量。</p>
+<p>现在这些词向量已经捕捉到上下文的信息。我们可以利用基本代数公式来发现单词之间的关系（比如，“国王”-“男人”+“女人”=“王后”）。这些词向量可以代替词袋用来预测未知数据的情感状况。该模型的优点在于不仅考虑了语境信息还压缩了数据规模（通常情况下，词汇量规模大约在300个单词左右而不是之前模型的100000个单词）。因为神经网络可以替我们提取出这些特征的信息，所以我们仅需要做很少的手动工作。但是由于文本的长度各异，我们可能需要利用所有词向量的平均值作为分类算法的输入值，从而对整个文本文档进行分类处理。</p>
+<p>然而，即使上述模型对词向量进行平均处理，我们仍然忽略了单词之间的排列顺序对情感分析的影响。作为一个处理可变长度文本的总结性方法，Quoc Le 和 Tomas Mikolov 提出了 Doc2Vec方法。除了增加一个段落向量以外，这个方法几乎等同于 Word2Vec。和 Word2Vec 一样，该模型也存在两种方法：Distributed Memory(DM) 和 Distributed Bag of Words(DBOW)。DM 试图在给定上下文和段落向量的情况下预测单词的概率。在一个句子或者文档的训练过程中，段落 ID 保持不变，共享着同一个段落向量。DBOW 则在仅给定段落向量的情况下预测段落中一组随机单词的概率。</p>
+<p>安装gensim</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">pip install gensim==3.8.0</span><br></pre></td></tr></table></figure>
+
+<p>具体操作：</p>
+<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br><span class="line">42</span><br><span class="line">43</span><br><span class="line">44</span><br><span class="line">45</span><br><span class="line">46</span><br><span class="line">47</span><br><span class="line">48</span><br><span class="line">49</span><br><span class="line">50</span><br><span class="line">51</span><br><span class="line">52</span><br><span class="line">53</span><br><span class="line">54</span><br><span class="line">55</span><br><span class="line">56</span><br><span class="line">57</span><br><span class="line">58</span><br><span class="line">59</span><br><span class="line">60</span><br><span class="line">61</span><br><span class="line">62</span><br><span class="line">63</span><br><span class="line">64</span><br><span class="line">65</span><br><span class="line">66</span><br><span class="line">67</span><br><span class="line">68</span><br><span class="line">69</span><br><span class="line">70</span><br><span class="line">71</span><br><span class="line">72</span><br><span class="line">73</span><br><span class="line">74</span><br><span class="line">75</span><br><span class="line">76</span><br><span class="line">77</span><br><span class="line">78</span><br><span class="line">79</span><br><span class="line">80</span><br><span class="line">81</span><br><span class="line">82</span><br><span class="line">83</span><br><span class="line">84</span><br><span class="line">85</span><br><span class="line">86</span><br><span class="line">87</span><br><span class="line">88</span><br><span class="line">89</span><br><span class="line">90</span><br><span class="line">91</span><br><span class="line">92</span><br><span class="line">93</span><br><span class="line">94</span><br><span class="line">95</span><br><span class="line">96</span><br><span class="line">97</span><br><span class="line">98</span><br><span class="line">99</span><br><span class="line">100</span><br><span class="line">101</span><br><span class="line">102</span><br><span class="line">103</span><br><span class="line">104</span><br><span class="line">105</span><br><span class="line">106</span><br><span class="line">107</span><br><span class="line">108</span><br><span class="line">109</span><br><span class="line">110</span><br><span class="line">111</span><br><span class="line">112</span><br><span class="line">113</span><br><span class="line">114</span><br><span class="line">115</span><br><span class="line">116</span><br><span class="line">117</span><br><span class="line">118</span><br><span class="line">119</span><br><span class="line">120</span><br><span class="line">121</span><br><span class="line">122</span><br><span class="line">123</span><br><span class="line">124</span><br><span class="line">125</span><br><span class="line">126</span><br><span class="line">127</span><br><span class="line">128</span><br><span class="line">129</span><br><span class="line">130</span><br><span class="line">131</span><br><span class="line">132</span><br><span class="line">133</span><br><span class="line">134</span><br><span class="line">135</span><br><span class="line">136</span><br><span class="line">137</span><br><span class="line">138</span><br><span class="line">139</span><br><span class="line">140</span><br><span class="line">141</span><br><span class="line">142</span><br><span class="line">143</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment"># 用gensim去做word2vec的处理，用sklearn当中的SVM进行建模</span></span><br><span class="line"><span class="keyword">from</span> sklearn.model_selection <span class="keyword">import</span> KFold</span><br><span class="line"><span class="keyword">from</span> sklearn.model_selection <span class="keyword">import</span> train_test_split</span><br><span class="line"><span class="keyword">from</span> gensim.models.word2vec <span class="keyword">import</span> Word2Vec</span><br><span class="line"><span class="keyword">import</span> numpy <span class="keyword">as</span> np</span><br><span class="line"><span class="keyword">import</span> pandas <span class="keyword">as</span> pd</span><br><span class="line"><span class="keyword">import</span> jieba</span><br><span class="line"><span class="keyword">from</span> sklearn.externals <span class="keyword">import</span> joblib</span><br><span class="line"><span class="keyword">from</span> sklearn.svm <span class="keyword">import</span> SVC</span><br><span class="line"></span><br><span class="line"><span class="comment">#  载入数据，做预处理(分词)，切分训练集与测试集</span></span><br><span class="line"><span class="function"><span class="keyword">def</span> <span class="title">load_file_and_preprocessing</span><span class="params">()</span>:</span></span><br><span class="line">    neg=pd.read_excel(<span class="string">'data/neg.xls'</span>,header=<span class="literal">None</span>,index=<span class="literal">None</span>)</span><br><span class="line">    pos=pd.read_excel(<span class="string">'data/pos.xls'</span>,header=<span class="literal">None</span>,index=<span class="literal">None</span>)</span><br><span class="line"></span><br><span class="line">    cw = <span class="keyword">lambda</span> x: list(jieba.cut(x))</span><br><span class="line"></span><br><span class="line">    <span class="comment"># 新增一列 word ,存放分好词的评论，pos[0]代表表格第一列</span></span><br><span class="line"></span><br><span class="line">    pos[<span class="string">'words'</span>] = pos[<span class="number">0</span>].apply(cw)</span><br><span class="line">    neg[<span class="string">'words'</span>] = neg[<span class="number">0</span>].apply(cw)</span><br><span class="line"></span><br><span class="line">    <span class="comment"># np.ones(len(pos)) 新建一个长度为len(pos)的数组并初始化元素全为1来标注好评</span></span><br><span class="line">    <span class="comment"># np.concatenate（）连接数组</span></span><br><span class="line">    <span class="comment"># axis=0 向下执行方法 axis=1向右执行方法</span></span><br><span class="line">    y = np.concatenate((np.ones(len(pos)), np.zeros(len(neg))),axis=<span class="number">0</span>)</span><br><span class="line"></span><br><span class="line">    <span class="comment"># train_test_split：从样本中随机的按比例选取train data和testdata</span></span><br><span class="line">    <span class="comment"># 一般形式：train_test_split(train_data,train_target,test_size=0.4, random_state=0)</span></span><br><span class="line">    <span class="comment"># train_data：所要划分的样本特征集</span></span><br><span class="line">    <span class="comment"># train_target：所要划分的样本结果（标注）</span></span><br><span class="line">    <span class="comment"># test_size：样本占比，如果是整数的话就是样本的数量</span></span><br><span class="line">    <span class="comment"># random_state：是随机数的种子。</span></span><br><span class="line"></span><br><span class="line">    x_train, x_test, y_train, y_test = train_test_split(np.concatenate((pos[<span class="string">'words'</span>], neg[<span class="string">'words'</span>])), y, test_size=<span class="number">0.2</span>)</span><br><span class="line"></span><br><span class="line">    np.save(<span class="string">'svm_data/y_train.npy'</span>,y_train)</span><br><span class="line">    np.save(<span class="string">'svm_data/y_test.npy'</span>,y_test)</span><br><span class="line">    <span class="keyword">return</span> x_train,x_test</span><br><span class="line"></span><br><span class="line"></span><br><span class="line"></span><br><span class="line"><span class="comment"># 对每个句子的所有词向量取均值，来生成一个句子的vector</span></span><br><span class="line"><span class="function"><span class="keyword">def</span> <span class="title">build_sentence_vector</span><span class="params">(text, size,imdb_w2v)</span>:</span></span><br><span class="line">    vec = np.zeros(size).reshape((<span class="number">1</span>, size))</span><br><span class="line">    count = <span class="number">0.</span></span><br><span class="line">    <span class="keyword">for</span> word <span class="keyword">in</span> text:</span><br><span class="line">        <span class="keyword">try</span>:</span><br><span class="line">            vec += imdb_w2v[word].reshape((<span class="number">1</span>, size))</span><br><span class="line">            count += <span class="number">1.</span></span><br><span class="line">        <span class="keyword">except</span> KeyError:</span><br><span class="line">            <span class="keyword">continue</span></span><br><span class="line">    <span class="keyword">if</span> count != <span class="number">0</span>:</span><br><span class="line">        vec /= count</span><br><span class="line">    <span class="keyword">return</span> vec</span><br><span class="line"></span><br><span class="line"><span class="comment"># 计算词向量</span></span><br><span class="line"><span class="function"><span class="keyword">def</span> <span class="title">get_train_vecs</span><span class="params">(x_train, x_test)</span>:</span></span><br><span class="line">    n_dim = <span class="number">300</span></span><br><span class="line">    <span class="comment"># 初始化模型和词表</span></span><br><span class="line">    imdb_w2v = Word2Vec(x_train, size=n_dim, min_count=<span class="number">10</span>)</span><br><span class="line">    <span class="comment"># imdb_w2v = Word2Vec(size=300, window=5, min_count=10, workers=12)</span></span><br><span class="line">    <span class="comment"># imdb_w2v.build_vocab(x_train)</span></span><br><span class="line">    <span class="comment">#</span></span><br><span class="line">    <span class="comment"># imdb_w2v.train(x_train,</span></span><br><span class="line">    <span class="comment">#                total_examples=imdb_w2v.corpus_count,</span></span><br><span class="line">    <span class="comment">#                epochs=imdb_w2v.iter)</span></span><br><span class="line"></span><br><span class="line"></span><br><span class="line">    train_vecs = np.concatenate([build_sentence_vector(z, n_dim, imdb_w2v) <span class="keyword">for</span> z <span class="keyword">in</span> x_train])</span><br><span class="line">    <span class="comment"># train_vecs = scale(train_vecs)</span></span><br><span class="line"></span><br><span class="line">    np.save(<span class="string">'svm_data/train_vecs.npy'</span>, train_vecs)</span><br><span class="line">    print(train_vecs.shape)</span><br><span class="line">    <span class="comment"># 在测试集上训练</span></span><br><span class="line">    imdb_w2v.train(x_test)</span><br><span class="line">    <span class="comment"># imdb_w2v.train(x_test,</span></span><br><span class="line">    <span class="comment">#                total_examples=imdb_w2v.corpus_count,</span></span><br><span class="line">    <span class="comment">#                epochs=imdb_w2v.iter)</span></span><br><span class="line"></span><br><span class="line">    imdb_w2v.save(<span class="string">'svm_data/w2v_model/w2v_model.pkl'</span>)</span><br><span class="line">    <span class="comment"># Build test tweet vectors then scale</span></span><br><span class="line">    test_vecs = np.concatenate([build_sentence_vector(z, n_dim, imdb_w2v) <span class="keyword">for</span> z <span class="keyword">in</span> x_test])</span><br><span class="line">    <span class="comment"># test_vecs = scale(test_vecs)</span></span><br><span class="line">    np.save(<span class="string">'svm_data/test_vecs.npy'</span>, test_vecs)</span><br><span class="line">    print(test_vecs.shape)</span><br><span class="line"></span><br><span class="line"></span><br><span class="line"></span><br><span class="line"><span class="function"><span class="keyword">def</span> <span class="title">get_data</span><span class="params">()</span>:</span></span><br><span class="line">    train_vecs=np.load(<span class="string">'svm_data/train_vecs.npy'</span>)</span><br><span class="line">    y_train=np.load(<span class="string">'svm_data/y_train.npy'</span>)</span><br><span class="line">    test_vecs=np.load(<span class="string">'svm_data/test_vecs.npy'</span>)</span><br><span class="line">    y_test=np.load(<span class="string">'svm_data/y_test.npy'</span>)</span><br><span class="line">    <span class="keyword">return</span> train_vecs,y_train,test_vecs,y_test</span><br><span class="line"></span><br><span class="line"><span class="comment"># 训练svm模型</span></span><br><span class="line"></span><br><span class="line"><span class="function"><span class="keyword">def</span> <span class="title">svm_train</span><span class="params">(train_vecs,y_train,test_vecs,y_test)</span>:</span></span><br><span class="line">    clf=SVC(kernel=<span class="string">'rbf'</span>,verbose=<span class="literal">True</span>)</span><br><span class="line">    clf.fit(train_vecs,y_train)</span><br><span class="line">    joblib.dump(clf, <span class="string">'svm_data/svm_model/model.pkl'</span>)</span><br><span class="line">    print(clf.score(test_vecs,y_test))</span><br><span class="line"></span><br><span class="line"></span><br><span class="line"><span class="comment"># 构建待预测句子的向量</span></span><br><span class="line"></span><br><span class="line"><span class="function"><span class="keyword">def</span> <span class="title">get_predict_vecs</span><span class="params">(words)</span>:</span></span><br><span class="line">    n_dim = <span class="number">300</span></span><br><span class="line">    imdb_w2v = Word2Vec.load(<span class="string">'svm_data/w2v_model/w2v_model.pkl'</span>)</span><br><span class="line">    <span class="comment">#imdb_w2v.train(words)</span></span><br><span class="line">    train_vecs = build_sentence_vector(words, n_dim,imdb_w2v)</span><br><span class="line">    <span class="comment">#print train_vecs.shape</span></span><br><span class="line">    <span class="keyword">return</span> train_vecs</span><br><span class="line"></span><br><span class="line"><span class="comment"># 对单个句子进行情感判断</span></span><br><span class="line"></span><br><span class="line"><span class="function"><span class="keyword">def</span> <span class="title">svm_predict</span><span class="params">(string)</span>:</span></span><br><span class="line">    words=jieba.lcut(string)</span><br><span class="line">    words_vecs=get_predict_vecs(words)</span><br><span class="line">    clf=joblib.load(<span class="string">'svm_data/svm_model/model.pkl'</span>)</span><br><span class="line"></span><br><span class="line">    result=clf.predict(words_vecs)</span><br><span class="line"></span><br><span class="line">    <span class="keyword">if</span> int(result[<span class="number">0</span>])==<span class="number">1</span>:</span><br><span class="line">        print(string,<span class="string">' 正面评价'</span>)</span><br><span class="line">    <span class="keyword">else</span>:</span><br><span class="line">        print(string,<span class="string">' 负面评价'</span>)</span><br><span class="line"></span><br><span class="line"></span><br><span class="line"></span><br><span class="line"></span><br><span class="line"></span><br><span class="line"><span class="keyword">if</span> __name__ == <span class="string">"__main__"</span>:</span><br><span class="line"></span><br><span class="line"></span><br><span class="line">    <span class="string">'''</span></span><br><span class="line"><span class="string">    验证模型</span></span><br><span class="line"><span class="string">    '''</span></span><br><span class="line">    <span class="comment">#string='这手机真棒，从1米高的地方摔下去就坏了'</span></span><br><span class="line">    string=<span class="string">'电池充完了电连手机都打不开.简直烂的要命.真是金玉其外,败絮其中!连5号电池都不如'</span></span><br><span class="line">    string=<span class="string">'这手机质量不错'</span></span><br><span class="line">    svm_predict(string)</span><br></pre></td></tr></table></figure>
+        </div>
+
+        
+            <section class="post-copyright">
+                
+                    <p class="copyright-item">
+                        <span>Author:</span>
+                        <span>Haibei</span>
+                    </p>
+                
+                
+                    <p class="copyright-item">
+                        <span>Permalink:</span>
+                        <span><a href="http://yoursite.com/2018/08/10/自然语言情感分析/">http://yoursite.com/2018/08/10/自然语言情感分析/</a></span>
+                    </p>
+                
+                
+                    <p class="copyright-item">
+                        <span>License:</span>
+                        <span></span>
+                    </p>
+                
+                
+                     <p class="copyright-item">
+                         <span>Slogan:</span>
+                         <span>Do you believe in <strong>DESTINY<strong>?</strong></strong></span>
+                     </p>
+                
+
+            </section>
+        
+        <section class="post-tags">
+            <div>
+                <span>Tag(s):</span>
+                <span class="tag">
+                    
+                </span>
+            </div>
+            <div>
+                <a href="javascript:window.history.back();">back</a>
+                <span>· </span>
+                <a href="/">home</a>
+            </div>
+        </section>
+        <section class="post-nav">
+            
+                <a class="prev" rel="prev" href="/2018/08/20/Vue的富文本编辑器/">Vue的富文本编辑器</a>
+            
+            
+            <a class="next" rel="next" href="/2018/04/17/支付宝退款/">支付宝退款</a>
+            
+        </section>
+
+
+    </article>
+</div>
+
+        </div>
+        <footer id="footer" class="footer">
+    <div class="copyright">
+        <span>© 2014-1019 Hai۰Bei | 友情链接：   <a href="https://zxyyee.cn" target="_blank">张兴亚</a></span>
+    </div>
+</footer>
+    </div>
+</body>
+</html>

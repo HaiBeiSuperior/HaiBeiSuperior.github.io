@@ -1,0 +1,227 @@
+<!DOCTYPE html>
+<html lang="en">
+<head><meta name="generator" content="Hexo 3.9.0">
+    <meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, user-scalable=no, initial-scale=1.0, maximum-scale=1.0, minimum-scale=1.0">
+<meta http-equiv="X-UA-Compatible" content="ie=edge">
+
+
+
+<title>分享一个QQ第三方登录详解 | 海北的个人博客</title>
+
+
+
+    <link rel="icon" href="/favicon.ico">
+
+
+
+
+    <!-- stylesheets list from _config.yml -->
+    
+    <link rel="stylesheet" href="/css/style.css">
+    
+
+
+
+    <!-- scripts list from _config.yml -->
+    
+    <script src="/js/script.js"></script>
+    
+    <script src="/js/tocbot.min.js"></script>
+    
+
+
+
+    
+    
+        
+    
+
+
+</head>
+<body>
+    <div class="wrapper">
+        <header>
+    <nav class="navbar">
+        <div class="container">
+            <div class="navbar-header header-logo"><a href="/">ღHaibei&#39;s Blog</a></div>
+            <div class="menu navbar-right">
+                
+                    <a class="menu-item" href="/archives">Blog</a>
+                
+                    <a class="menu-item" href="/category">Categories</a>
+                
+                    <a class="menu-item" href="/tag">Tags</a>
+                
+                    <a class="menu-item" href="/about">About</a>
+                
+                    <a class="menu-item" href="/resume">Resume</a>
+                
+                <input id="switch_default" type="checkbox" class="switch_default">
+                <label for="switch_default" class="toggleBtn"></label>
+            </div>
+
+        </div>
+    </nav>
+
+    
+    <nav class="navbar-mobile" id="nav-mobile">
+        <div class="container">
+            <div class="navbar-header">
+                <div>
+                    <a href="/">ღHaibei&#39;s Blog</a><a id="mobile-toggle-theme">·&nbsp;Light</a>
+                </div>
+                <div class="menu-toggle" onclick="mobileBtn()">&#9776; Menu</div>
+            </div>
+            <div class="menu" id="mobile-menu">
+                
+                    <a class="menu-item" href="/archives">Blog</a>
+                
+                    <a class="menu-item" href="/category">Categories</a>
+                
+                    <a class="menu-item" href="/tag">Tags</a>
+                
+                    <a class="menu-item" href="/about">About</a>
+                
+                    <a class="menu-item" href="/resume">Resume</a>
+                
+            </div>
+        </div>
+    </nav>
+
+</header>
+<script>
+    var mobileBtn = function f() {
+        var toggleMenu = document.getElementsByClassName("menu-toggle")[0];
+        var mobileMenu = document.getElementById("mobile-menu");
+        if(toggleMenu.classList.contains("active")){
+           toggleMenu.classList.remove("active")
+            mobileMenu.classList.remove("active")
+        }else{
+            toggleMenu.classList.add("active")
+            mobileMenu.classList.add("active")
+        }
+    }
+</script>
+        <div class="main">
+            <div class="container">
+    
+    
+
+    
+    <article class="post-wrap">
+        <header class="post-header">
+            <h1 class="post-title">分享一个QQ第三方登录详解</h1>
+            
+                <div class="post-meta">
+                    
+                        Author: <a itemprop="author" rel="author" href="/">Haibei</a>
+                    
+
+                    
+                        <span class="post-time">
+                        Date: <a href="#">September 9, 2018&nbsp;&nbsp;20:45:34</a>
+                        </span>
+                    
+                    
+                </div>
+            
+        </header>
+
+        <div class="post-content">
+            <p>在web开发过程中，经常会使用到第三方登录的功能，那么今天就详细的分享一下关于QQ的第三方登录。</p>
+<p>（本篇后端框架采用的是Tornado框架）</p>
+<p>如果阅读理解能力没有问题的情况下，可以详细阅读QQ第三方登录的官方文档：</p>
+<p><a href="https://wiki.connect.qq.com/%E4%BD%BF%E7%94%A8authorization_code%E8%8E%B7%E5%8F%96access_token" target="_blank" rel="noopener">https://wiki.connect.qq.com/%E4%BD%BF%E7%94%A8authorization_code%E8%8E%B7%E5%8F%96access_token</a> </p>
+<p>首先说明一下，使用QQ第三方登录，必须要有审核通过的域名！！！</p>
+<p>好了，现在该详细介绍具体步骤如何实现了：</p>
+<p><h3>第一步：</h3></p>
+<p>​        再前端页面放一个按钮，按钮的样式官方文档上有，可以随意选择，选好按钮以后给按钮一个点击事    </p>
+<p>​        件，向后台发起请求</p>
+<p><h3>第二步：</h3></p>
+<p>​        后端接口收到请求后，向 <a href="https://graph.qq.com/oauth2.0/authorize" target="_blank" rel="noopener">https://graph.qq.com/oauth2.0/authorize</a> 发起requests请求获取</p>
+<p>​        Authorization Code，这里要注意一下，在请求时需要附带必要参数，在文档上都有详细介绍</p>
+<p>​        </p>
+<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment"># 获取code url</span></span><br><span class="line"><span class="class"><span class="keyword">class</span> <span class="title">GetAuthorizationCode</span><span class="params">(BaseHandler)</span>:</span></span><br><span class="line">   <span class="keyword">async</span> <span class="function"><span class="keyword">def</span> <span class="title">get</span><span class="params">(self, *args, **kwargs)</span>:</span></span><br><span class="line">        url = <span class="string">'https://graph.qq.com/oauth2.0/authorize'</span></span><br><span class="line">        data = &#123;</span><br><span class="line">            <span class="string">'response_type'</span>:<span class="string">'code'</span>,</span><br><span class="line">            <span class="string">'client_id'</span>:<span class="string">'101487535'</span>,</span><br><span class="line">            <span class="string">'redirect_uri'</span>:<span class="string">'http://login.yskj599.com/user/login/qq_login'</span>,</span><br><span class="line">            <span class="string">'state'</span>:<span class="string">'101487535'</span></span><br><span class="line">        &#125;</span><br><span class="line">        con = requests.get(url=url,params=data)</span><br><span class="line">        urls = con.url</span><br><span class="line">        data = &#123;</span><br><span class="line">            <span class="comment"># 前端页面需要跳转的url地址</span></span><br><span class="line">            <span class="string">'url'</span>:urls</span><br><span class="line">        &#125;</span><br><span class="line">        self.write(json.dumps(data))</span><br></pre></td></tr></table></figure>
+
+<p>​        请求后我们可以拿到一个url，这个url就是需要我们返回给前端进行跳转的url地址</p>
+<p><h3>第三步：</h3></p>
+<p>​        再跳转至登录页面并登陆时，我们需要先获取到access_token和OpenID，在这里我们可以定义两个函    </p>
+<p>​        数，qq_get_access_token、qq_get_OpenID，具体代码如下：</p>
+<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment"># QQ登录获取access_token</span></span><br><span class="line"><span class="function"><span class="keyword">def</span> <span class="title">qq_get_access_token</span><span class="params">(code,app_id)</span>:</span></span><br><span class="line">    app = &#123;</span><br><span class="line">        <span class="string">'grant_type'</span>: <span class="string">'authorization_code'</span>,</span><br><span class="line">        <span class="string">'client_id'</span>: app_id,</span><br><span class="line">        <span class="string">'client_secret'</span>: <span class="string">'9c383c0a358b3382ed52269ccff3691f'</span>,</span><br><span class="line">        <span class="string">'code'</span>: code,</span><br><span class="line">        <span class="string">'redirect_uri'</span>: <span class="string">'http://login.yskj599.com/user/login'</span></span><br><span class="line">    &#125;</span><br><span class="line">    access_url = <span class="string">'https://graph.qq.com/oauth2.0/token'</span></span><br><span class="line">    response = requests.get(url=access_url, params=app)</span><br><span class="line">    alist = response.text.split(<span class="string">'='</span>)</span><br><span class="line">    access_token = alist[<span class="number">1</span>].split(<span class="string">'&amp;'</span>)[<span class="number">0</span>]</span><br><span class="line">    refresh_token = alist[<span class="number">3</span>]</span><br><span class="line">    <span class="keyword">return</span> access_token</span><br></pre></td></tr></table></figure>
+
+<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment"># QQ登录获取OpenID</span></span><br><span class="line"><span class="function"><span class="keyword">def</span> <span class="title">qq_get_OpenID</span><span class="params">(access_token)</span>:</span></span><br><span class="line">    OpenID_url = <span class="string">'https://graph.qq.com/oauth2.0/me'</span></span><br><span class="line">    response = requests.get(OpenID_url, params=&#123;<span class="string">'access_token'</span>: access_token&#125;)</span><br><span class="line">    OpenID = response.text.split(<span class="string">'"'</span>)[<span class="number">-2</span>]</span><br><span class="line">    <span class="keyword">return</span> OpenID</span><br></pre></td></tr></table></figure>
+
+<p>​        </p>
+<p>​        接下来就非常简单了，我们只需要安装文档的需求，调用我们定义好的函数，并做好业务逻辑的判断就    </p>
+<p>​        ok了！</p>
+<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">#QQ登录接口</span></span><br><span class="line"><span class="class"><span class="keyword">class</span> <span class="title">QQLogin</span><span class="params">(BaseHandler)</span>:</span></span><br><span class="line">   <span class="keyword">async</span> <span class="function"><span class="keyword">def</span> <span class="title">get</span><span class="params">(self, *args, **kwargs)</span>:</span></span><br><span class="line">        params = self.request.arguments</span><br><span class="line">        app_id = <span class="string">'101487535'</span></span><br><span class="line">        <span class="keyword">try</span>:</span><br><span class="line">            code = params[<span class="string">'code'</span>][<span class="number">0</span>].decode()</span><br><span class="line">            access_token = QQ_get_access_token(code,app_id)</span><br><span class="line">            OpenID = QQ_get_OpenID(access_token)</span><br><span class="line">            params2 = &#123;</span><br><span class="line">                <span class="string">'access_token'</span>:access_token,</span><br><span class="line">                <span class="string">'oauth_consumer_key'</span>:<span class="string">'101487535'</span>,</span><br><span class="line">                <span class="string">'openid'</span>:OpenID</span><br><span class="line">            &#125;</span><br><span class="line">            <span class="comment"># QQ返回登录用户的信息</span></span><br><span class="line">            get_info_url = <span class="string">'https://graph.qq.com/user/get_user_info'</span></span><br><span class="line">            response = requests.get(url = get_info_url,params=params2)</span><br><span class="line">            user_info = response.json()</span><br><span class="line">            nickname = user_info[<span class="string">'nickname'</span>]</span><br><span class="line">            <span class="comment"># 拿到用户的nickname后，我们就可以做一些业务逻辑的判断</span></span><br><span class="line">            user = sess.query(User).filter(User.nick == nickname).first()</span><br><span class="line">            <span class="keyword">if</span> user:</span><br><span class="line">                self.redirect(<span class="string">'http://127.0.0.1:8080?u_name=&#123;&#125;'</span>.format(nickname))</span><br><span class="line">            <span class="keyword">else</span>:</span><br><span class="line">                qq_user = User(nick = nickname,password = <span class="string">'123456'</span>,gender=<span class="number">1</span>,</span><br><span class="line">                               addres =user_info[<span class="string">'province'</span>] + user_info[<span class="string">'city'</span>],</span><br><span class="line">                               attributes = <span class="number">2</span>,is_activates = <span class="number">1</span>)</span><br><span class="line">                <span class="keyword">try</span>:</span><br><span class="line">                    sess.add(qq_user)</span><br><span class="line">                    sess.commit()</span><br><span class="line">                	self.redirect(<span class="string">'http://127.0.0.1:8080?u_name=&#123;&#125;'</span>.format(nickname))</span><br><span class="line">                <span class="keyword">except</span>:</span><br><span class="line">                    <span class="keyword">pass</span></span><br><span class="line">        <span class="keyword">except</span>:</span><br><span class="line">            self.write(<span class="string">'登录失败'</span>)</span><br></pre></td></tr></table></figure>
+
+<p>好了，关于QQ的第三方登录就基本上完成了，是不是很简单呢？</p>
+
+        </div>
+
+        
+            <section class="post-copyright">
+                
+                    <p class="copyright-item">
+                        <span>Author:</span>
+                        <span>Haibei</span>
+                    </p>
+                
+                
+                    <p class="copyright-item">
+                        <span>Permalink:</span>
+                        <span><a href="http://yoursite.com/2018/09/09/分享一个QQ第三方登录详解/">http://yoursite.com/2018/09/09/分享一个QQ第三方登录详解/</a></span>
+                    </p>
+                
+                
+                    <p class="copyright-item">
+                        <span>License:</span>
+                        <span></span>
+                    </p>
+                
+                
+                     <p class="copyright-item">
+                         <span>Slogan:</span>
+                         <span>Do you believe in <strong>DESTINY<strong>?</strong></strong></span>
+                     </p>
+                
+
+            </section>
+        
+        <section class="post-tags">
+            <div>
+                <span>Tag(s):</span>
+                <span class="tag">
+                    
+                </span>
+            </div>
+            <div>
+                <a href="javascript:window.history.back();">back</a>
+                <span>· </span>
+                <a href="/">home</a>
+            </div>
+        </section>
+        <section class="post-nav">
+            
+                <a class="prev" rel="prev" href="/2018/09/27/基础线性回归/">基础线性回归</a>
+            
+            
+            <a class="next" rel="next" href="/2018/09/05/Cookie、Storage/">Cookie、Storage</a>
+            
+        </section>
+
+
+    </article>
+</div>
+
+        </div>
+        <footer id="footer" class="footer">
+    <div class="copyright">
+        <span>© 2014-1019 Hai۰Bei | 友情链接：   <a href="https://zxyyee.cn" target="_blank">张兴亚</a></span>
+    </div>
+</footer>
+    </div>
+</body>
+</html>

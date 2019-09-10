@@ -1,0 +1,216 @@
+<!DOCTYPE html>
+<html lang="en">
+<head><meta name="generator" content="Hexo 3.9.0">
+    <meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, user-scalable=no, initial-scale=1.0, maximum-scale=1.0, minimum-scale=1.0">
+<meta http-equiv="X-UA-Compatible" content="ie=edge">
+
+
+
+<title>python3.7.3操作FastDfs来进行文件操作 | 海北的个人博客</title>
+
+
+
+    <link rel="icon" href="/favicon.ico">
+
+
+
+
+    <!-- stylesheets list from _config.yml -->
+    
+    <link rel="stylesheet" href="/css/style.css">
+    
+
+
+
+    <!-- scripts list from _config.yml -->
+    
+    <script src="/js/script.js"></script>
+    
+    <script src="/js/tocbot.min.js"></script>
+    
+
+
+
+    
+    
+        
+    
+
+
+</head>
+<body>
+    <div class="wrapper">
+        <header>
+    <nav class="navbar">
+        <div class="container">
+            <div class="navbar-header header-logo"><a href="/">ღHaibei&#39;s Blog</a></div>
+            <div class="menu navbar-right">
+                
+                    <a class="menu-item" href="/archives">Blog</a>
+                
+                    <a class="menu-item" href="/category">Categories</a>
+                
+                    <a class="menu-item" href="/tag">Tags</a>
+                
+                    <a class="menu-item" href="/about">About</a>
+                
+                    <a class="menu-item" href="/resume">Resume</a>
+                
+                <input id="switch_default" type="checkbox" class="switch_default">
+                <label for="switch_default" class="toggleBtn"></label>
+            </div>
+
+        </div>
+    </nav>
+
+    
+    <nav class="navbar-mobile" id="nav-mobile">
+        <div class="container">
+            <div class="navbar-header">
+                <div>
+                    <a href="/">ღHaibei&#39;s Blog</a><a id="mobile-toggle-theme">·&nbsp;Light</a>
+                </div>
+                <div class="menu-toggle" onclick="mobileBtn()">&#9776; Menu</div>
+            </div>
+            <div class="menu" id="mobile-menu">
+                
+                    <a class="menu-item" href="/archives">Blog</a>
+                
+                    <a class="menu-item" href="/category">Categories</a>
+                
+                    <a class="menu-item" href="/tag">Tags</a>
+                
+                    <a class="menu-item" href="/about">About</a>
+                
+                    <a class="menu-item" href="/resume">Resume</a>
+                
+            </div>
+        </div>
+    </nav>
+
+</header>
+<script>
+    var mobileBtn = function f() {
+        var toggleMenu = document.getElementsByClassName("menu-toggle")[0];
+        var mobileMenu = document.getElementById("mobile-menu");
+        if(toggleMenu.classList.contains("active")){
+           toggleMenu.classList.remove("active")
+            mobileMenu.classList.remove("active")
+        }else{
+            toggleMenu.classList.add("active")
+            mobileMenu.classList.add("active")
+        }
+    }
+</script>
+        <div class="main">
+            <div class="container">
+    
+    
+
+    
+    <article class="post-wrap">
+        <header class="post-header">
+            <h1 class="post-title">python3.7.3操作FastDfs来进行文件操作</h1>
+            
+                <div class="post-meta">
+                    
+                        Author: <a itemprop="author" rel="author" href="/">Haibei</a>
+                    
+
+                    
+                        <span class="post-time">
+                        Date: <a href="#">May 17, 2019&nbsp;&nbsp;20:56:16</a>
+                        </span>
+                    
+                    
+                </div>
+            
+        </header>
+
+        <div class="post-content">
+            <p>在之前的一篇文章中:<a href="[http://iamhaibei.cn/2019/05/12/利用Docker来搭建分布式文件系统FastDfs/](http://yoursite.com/2019/05/12/%E5%88%A9%E7%94%A8Docker%E6%9D%A5%E6%90%AD%E5%BB%BA%E5%88%86%E5%B8%83%E5%BC%8F%E6%96%87%E4%BB%B6%E7%B3%BB%E7%BB%9FFastDfs/)">利用Docker来搭建分布式文件系统FastDfs</a>，我们已经搭建好了FastDfs分布式文件系统，并且已经可以通过命令进行上传操作，那么如何使用python来上传文件呢？</p>
+<p>​    很简单，还是利用docker的特性，我们知道docker 的 -v 参数，可以自动挂载宿主机的文件件到容器中去，这样宿主和容器就可以进行无障碍的文件共享，我们通过-v参数，把宿主机的root目录自动挂载到docker容器中的/var/root目录中去。</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">docker run -d --network=host --name tracker -v /root:/var/root delron/fastdfs tracker</span><br><span class="line"></span><br><span class="line">docker run -d --network=host --name storage -e TRACKER_SERVER=172.18.0.1:22122 -v /root:/var/root -e GROUP_NAME=group1 delron/fastdfs storage</span><br></pre></td></tr></table></figure>
+
+<p>我们又起了两个服务，一个tracker(调度)另外一个是storage(仓库),只不过都共享了宿主的文件夹/root，挂载到了/var/root下</p>
+<p>然后分别进入宿主的命令行以及进入容器storage的命令行，发现文件夹已经共享</p>
+<p><img src="https://v3u.cn/v3u/Public/js/editor/attached/image/20190520/20190520093255_45942.png" alt="img"></p>
+<p>此时，我们可以利用docker的exec命令不进入容器，直接在宿主机的环境下调用容器内的命令，因为文件夹已经共享，所以我们输入的文件目录虽然是容器中的/var/root目录，但是实际上该上传的文件就在宿主的/root目录中，这里，我们不上传图片，而是上传一个视频</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">docker exec -i storage /usr/bin/fdfs_upload_file /etc/fdfs/client.conf /var/root/test.mp4</span><br></pre></td></tr></table></figure>
+
+<p>上传成功后，fastdfs将会返回视频的网络地址</p>
+<p><img src="https://v3u.cn/v3u/Public/js/editor/attached/image/20190520/20190520093824_83463.png" alt="img"></p>
+<p>浏览器访问一下，没有问题</p>
+<p><img src="https://v3u.cn/v3u/Public/js/editor/attached/image/20190520/20190520094004_88790.png" alt="img"></p>
+<p>至此，在宿主机中上传文件已经搞定，而python同样也可以在命令行中执行命令，我们可以从命令中得到URL的做法来实现django与fastdfs的交流，这里利用的是python中的os.popen方法，可以非常简单的在命令行中获取返回的fastdfs网络地址，从而避开了必须要安装fastdfs的python客户端，因为该客户端对python3并不十分友好。代码如下：</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br></pre></td><td class="code"><pre><span class="line">import os</span><br><span class="line">import re</span><br><span class="line"></span><br><span class="line">std = os.popen(&quot;docker exec -i storage /usr/bin/fdfs_upload_file /etc/fdfs/client.conf /var/root/test.mp4&quot;).read()</span><br><span class="line">print(&apos;*********** fastdfs excute start ***********&apos;)</span><br><span class="line">print(std.strip())</span><br><span class="line">print(&apos;*********** fastdfs excute end ***********&apos;)</span><br></pre></td></tr></table></figure>
+
+<p>这样，在django中上传文件时，就可以通过命令的方式上传到fastdfs中，获取返回地址后入库就可以了，本次操作将docker的特性运用到了极致，由此可见docker的泛用性之广，实实在在的提高了开发效率。</p>
+
+        </div>
+
+        
+            <section class="post-copyright">
+                
+                    <p class="copyright-item">
+                        <span>Author:</span>
+                        <span>Haibei</span>
+                    </p>
+                
+                
+                    <p class="copyright-item">
+                        <span>Permalink:</span>
+                        <span><a href="http://yoursite.com/2019/05/17/python3-7-3操作FastDfs来进行文件操作/">http://yoursite.com/2019/05/17/python3-7-3操作FastDfs来进行文件操作/</a></span>
+                    </p>
+                
+                
+                    <p class="copyright-item">
+                        <span>License:</span>
+                        <span></span>
+                    </p>
+                
+                
+                     <p class="copyright-item">
+                         <span>Slogan:</span>
+                         <span>Do you believe in <strong>DESTINY<strong>?</strong></strong></span>
+                     </p>
+                
+
+            </section>
+        
+        <section class="post-tags">
+            <div>
+                <span>Tag(s):</span>
+                <span class="tag">
+                    
+                </span>
+            </div>
+            <div>
+                <a href="javascript:window.history.back();">back</a>
+                <span>· </span>
+                <a href="/">home</a>
+            </div>
+        </section>
+        <section class="post-nav">
+            
+                <a class="prev" rel="prev" href="/2019/05/27/在centos7-6上部署前后端分离项目Nginx反向代理vue-js2-6-Tornado5-1-1，使用supervisor统一管理服务/">在centos7.6上部署前后端分离项目Nginx反向代理vue.js2.6+Tornado5.1.1，使用supervisor统一管理服务</a>
+            
+            
+            <a class="next" rel="next" href="/2019/05/16/利用Docker挂载Nginx-rtmp来实现实时网络直播/">利用Docker挂载Nginx-rtmp来实现实时网络直播</a>
+            
+        </section>
+
+
+    </article>
+</div>
+
+        </div>
+        <footer id="footer" class="footer">
+    <div class="copyright">
+        <span>© 2014-1019 Hai۰Bei | 友情链接：   <a href="https://zxyyee.cn" target="_blank">张兴亚</a></span>
+    </div>
+</footer>
+    </div>
+</body>
+</html>
